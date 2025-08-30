@@ -11,7 +11,7 @@ import salon1 from "@/assets/salon-1.jpg";
 import salon2 from "@/assets/salon-2.jpg";
 import salon3 from "@/assets/salon-3.jpg";
 
-const allStores = [
+export const allStores = [
   // Men's Hair Stores
   {
     id: 101,
