@@ -91,6 +91,17 @@ const SalonDetail = () => {
         </div>
       </main>
       <Footer />
+      {store && (
+        <div className="fixed bottom-4 left-0 right-0 px-4">
+          <div className="mx-auto max-w-4xl rounded-xl border bg-white shadow-soft p-3 flex items-center justify-between gap-3">
+            <div className="text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground mr-2">{store.name}</span>
+              Open today • {store.openHours}
+            </div>
+            <Button>Book now</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
