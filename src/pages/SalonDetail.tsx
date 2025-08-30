@@ -3,6 +3,11 @@ import Footer from "@/components/layout/Footer";
 import { useParams, Link } from "react-router-dom";
 import { allStores } from "@/components/features/AllStores";
 import { Badge } from "@/components/ui/badge";
+import BookingModal from "@/components/features/BookingModal";
+import salonImg1 from "@/assets/salon-1.jpg";
+import salonImg2 from "@/assets/salon-2.jpg";
+import salonImg3 from "@/assets/salon-3.jpg";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Phone, Star, ArrowLeft, Clock, Verified, Award } from "lucide-react";
@@ -20,6 +25,22 @@ const categoryLabel = (c: string) => {
 const SalonDetail = () => {
   const { id } = useParams();
   const store = allStores.find(s => s.id === Number(id));
+
+  const [selectedService, setSelectedService] = useState<{ id: number; name: string; price: string; duration: string; homeVisit: boolean; salonVisit: boolean } | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  const baseServices = [
+    { id: 1, name: "Men’s Haircut", price: "₹500", duration: "30 min", homeVisit: false, salonVisit: true },
+    { id: 2, name: "Beard Grooming", price: "₹299", duration: "20 min", homeVisit: false, salonVisit: true },
+    { id: 3, name: "Facial Treatment", price: "₹1499", duration: "60 min", homeVisit: true, salonVisit: true },
+    { id: 4, name: "Hair Color", price: "₹1999", duration: "90 min", homeVisit: false, salonVisit: true },
+  ];
+  const womensAddons = [
+    { id: 5, name: "Bridal Makeup", price: "₹4999", duration: "120 min", homeVisit: true, salonVisit: true },
+  ];
+  const categoryServices = store?.category === "womens-beauty" || store?.category === "makeup-artists"
+    ? [...baseServices, ...womensAddons]
+    : baseServices;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -67,10 +88,53 @@ const SalonDetail = () => {
                     <h2 className="text-xl font-semibold mb-3">About</h2>
                     <p className="text-muted-foreground mb-4">{store.description}</p>
                     <h3 className="font-semibold mb-2">Specialties</h3>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       {store.specialties.map((s, i) => (
                         <Badge key={i} variant="outline">{s}</Badge>
                       ))}
+                    </div>
+
+                    <h3 className="font-semibold mb-2">Services</h3>
+                    <div className="divide-y border rounded-lg">
+                      {categoryServices.map(svc => (
+                        <div key={svc.id} className="flex items-center justify-between p-4">
+                          <div>
+                            <div className="font-medium">{svc.name}</div>
+                            <div className="text-sm text-muted-foreground flex items-center gap-3">
+                              <span>{svc.duration}</span>
+                              <span>•</span>
+                              <span className="font-semibold">{svc.price}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              onClick={() => { setSelectedService(svc); setIsBookingOpen(true); }}
+                            >
+                              Book Now
+                            </Button>
+                            <Link to={`/service/${svc.id}`} className="text-sm text-primary underline">Details</Link>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <h3 className="font-semibold mt-6 mb-2">Gallery</h3>
+                    <div className="grid grid-cols-3 gap-2">
+                      <img src={salonImg1} alt="Gallery 1" className="w-full h-24 object-cover rounded" />
+                      <img src={salonImg2} alt="Gallery 2" className="w-full h-24 object-cover rounded" />
+                      <img src={salonImg3} alt="Gallery 3" className="w-full h-24 object-cover rounded" />
+                    </div>
+
+                    <h3 className="font-semibold mt-6 mb-2">Reviews</h3>
+                    <div className="space-y-3">
+                      <div className="p-3 border rounded">
+                        <div className="flex items-center gap-2 text-yellow-500">⭐⭐⭐⭐⭐ <span className="text-foreground">Excellent service!</span></div>
+                        <div className="text-sm text-muted-foreground">Very professional staff.</div>
+                      </div>
+                      <div className="p-3 border rounded">
+                        <div className="flex items-center gap-2 text-yellow-500">⭐⭐⭐⭐ <span className="text-foreground">Loved the haircut</span></div>
+                        <div className="text-sm text-muted-foreground">Would recommend.</div>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -98,12 +162,21 @@ const SalonDetail = () => {
               <span className="font-semibold text-foreground mr-2">{store.name}</span>
               Open today • {store.openHours}
             </div>
-            <Button>Book now</Button>
+            <Button onClick={() => { setSelectedService(categoryServices[0]); setIsBookingOpen(true); }}>Book now</Button>
           </div>
         </div>
       )}
     </div>
   );
 };
+
+      {store && (
+        <BookingModal
+          service={selectedService}
+          salon={{ id: store.id, name: store.name, rating: store.rating, distance: store.distance, address: store.address, image: store.image }}
+          isOpen={isBookingOpen}
+          onClose={() => { setIsBookingOpen(false); setSelectedService(null); }}
+        />
+      )}
 
 export default SalonDetail;
