@@ -23,7 +23,7 @@ export const allStores = [
     address: "123 Main Street, Downtown",
     phone: "(555) 123-4567",
     image: salon1,
-    priceRange: "$$",
+    priceRange: "₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Premium Cuts", "Beard Styling", "Hot Towel Service"],
     description: "Upscale men's grooming with traditional barbershop atmosphere",
@@ -40,7 +40,7 @@ export const allStores = [
     address: "456 Oak Avenue, Midtown",
     phone: "(555) 234-5678",
     image: salon2,
-    priceRange: "$",
+    priceRange: "₹",
     openHours: "8:00 AM - 7:00 PM",
     specialties: ["Traditional Cuts", "Straight Razor Shaves", "Walk-ins Welcome"],
     description: "Traditional barbershop experience with skilled craftsmen",
@@ -56,7 +56,7 @@ export const allStores = [
     address: "789 Pine Street, Uptown",
     phone: "(555) 345-6789",
     image: salon3,
-    priceRange: "$$$",
+    priceRange: "₹₹₹",
     openHours: "10:00 AM - 9:00 PM",
     specialties: ["Designer Cuts", "Hair Treatments", "VIP Service"],
     description: "Modern luxury grooming experience for the discerning gentleman",
@@ -75,7 +75,7 @@ export const allStores = [
     address: "567 Beauty Avenue, Downtown",
     phone: "(555) 111-2222",
     image: salon1,
-    priceRange: "$$$",
+    priceRange: "₹₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Hair Styling", "Facials", "Beauty Packages", "Bridal Services"],
     description: "Premium beauty treatments with expert stylists and relaxing atmosphere",
@@ -92,7 +92,7 @@ export const allStores = [
     address: "890 Style Street, City Center",
     phone: "(555) 222-3333",
     image: salon2,
-    priceRange: "$$",
+    priceRange: "₹₹",
     openHours: "8:00 AM - 9:00 PM",
     specialties: ["Hair Coloring", "Treatments", "Bridal Packages", "Extensions"],
     description: "Complete beauty transformation services with modern techniques",
@@ -108,7 +108,7 @@ export const allStores = [
     address: "234 Luxury Lane, Uptown",
     phone: "(555) 333-4444",
     image: salon3,
-    priceRange: "$$$",
+    priceRange: "₹₹₹",
     openHours: "10:00 AM - 7:00 PM",
     specialties: ["Luxury Treatments", "Hair Care", "Wellness", "Anti-Aging"],
     description: "Luxury beauty experience with personalized care and wellness focus",
@@ -127,7 +127,7 @@ export const allStores = [
     address: "123 Nail Street, Downtown",
     phone: "(555) 111-2233",
     image: salon1,
-    priceRange: "$$",
+    priceRange: "₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Nail Art", "Gel Extensions", "Classic Manicure", "3D Designs"],
     description: "Creative nail art and premium manicure services with artistic flair",
@@ -144,7 +144,7 @@ export const allStores = [
     address: "456 Beauty Blvd, City Center",
     phone: "(555) 222-3344",
     image: salon2,
-    priceRange: "$$$",
+    priceRange: "₹₹₹",
     openHours: "8:00 AM - 9:00 PM",
     specialties: ["Luxury Pedicure", "Spa Treatments", "Nail Care", "Hand Treatments"],
     description: "Luxury nail care with relaxing spa experience and premium products",
@@ -163,7 +163,7 @@ export const allStores = [
     address: "345 Glam Street, Downtown",
     phone: "(555) 111-2244",
     image: salon1,
-    priceRange: "$$$",
+    priceRange: "₹₹₹",
     openHours: "8:00 AM - 10:00 PM",
     specialties: ["Bridal Makeup", "Party Makeup", "Photography", "Special Events"],
     description: "Professional makeup artists for all occasions with celebrity-level expertise",
@@ -180,7 +180,7 @@ export const allStores = [
     address: "678 Artist Avenue, City Center",
     phone: "(555) 222-3355",
     image: salon2,
-    priceRange: "$$",
+    priceRange: "₹₹",
     openHours: "9:00 AM - 9:00 PM",
     specialties: ["Event Makeup", "Creative Looks", "Professional Styling", "Fashion Shows"],
     description: "Creative makeup artistry and beauty transformations for fashion and events",
@@ -324,9 +324,9 @@ const AllStores: React.FC<AllStoresProps> = ({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Prices</SelectItem>
-                  <SelectItem value="$">$ Budget</SelectItem>
-                  <SelectItem value="$$">$$ Moderate</SelectItem>
-                  <SelectItem value="$$$">$$$ Premium</SelectItem>
+                  <SelectItem value="₹">₹ Budget</SelectItem>
+                  <SelectItem value="₹₹">₹₹ Moderate</SelectItem>
+                  <SelectItem value="₹₹₹">₹₹₹ Premium</SelectItem>
                 </SelectContent>
               </Select>
             </div>
