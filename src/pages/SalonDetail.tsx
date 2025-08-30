@@ -178,13 +178,4 @@ const SalonDetail = () => {
   );
 };
 
-      {store && (
-        <BookingModal
-          service={selectedService}
-          salon={{ id: store.id, name: store.name, rating: store.rating, distance: store.distance, address: store.address, image: store.image }}
-          isOpen={isBookingOpen}
-          onClose={() => { setIsBookingOpen(false); setSelectedService(null); }}
-        />
-      )}
-
 export default SalonDetail;
