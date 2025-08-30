@@ -25,7 +25,7 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
   const [service, setService] = useState("mens-hair");
   const [city, setCity] = useState("");
   const [date, setDate] = useState<Date | undefined>();
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState("any");
   const [price, setPrice] = useState("all");
 
   const apply = () => {
@@ -33,7 +33,7 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
     const params = new URLSearchParams();
     if (city) params.set("city", city);
     if (date) params.set("date", date.toISOString().slice(0,10));
-    if (time) params.set("time", time);
+    if (time && time !== "any") params.set("time", time);
     if (price && price !== "all") params.set("price", price);
     params.set("service", service);
     navigate(`${route}?${params.toString()}`);
