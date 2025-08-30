@@ -3,6 +3,7 @@ import { Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "@/contexts/LocationContext";
+import SearchFiltersBar from "@/components/features/SearchFiltersBar";
 
 const CleanHero = () => {
   const [query, setQuery] = useState("");
