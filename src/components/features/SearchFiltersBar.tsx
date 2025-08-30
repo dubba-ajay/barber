@@ -78,7 +78,7 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
             <SelectValue placeholder="Any time" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Any time</SelectItem>
+            <SelectItem value="any">Any time</SelectItem>
             {times.map((t) => (
               <SelectItem key={t} value={t}>{t}</SelectItem>
             ))}
