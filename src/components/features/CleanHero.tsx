@@ -20,6 +20,10 @@ const CleanHero = () => {
             Transparent pricing, verified professionals, instant booking.
           </p>
 
+          <div className="mb-4">
+            <SearchFiltersBar compact />
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-2 mb-3">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
