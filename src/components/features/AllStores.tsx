@@ -196,14 +196,16 @@ interface AllStoresProps {
   defaultSortBy?: "rating" | "distance" | "price" | "reviews";
 }
 
-const AllStores: React.FC<AllStoresProps> = ({ 
-  categoryFilter = "all", 
+const AllStores: React.FC<AllStoresProps> = ({
+  categoryFilter = "all",
   title = "All Beauty & Grooming Stores",
-  description = "Discover the best beauty and grooming services near you"
+  description = "Discover the best beauty and grooming services near you",
+  defaultPriceFilter = "all",
+  defaultSortBy = "rating"
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("rating");
-  const [priceFilter, setPriceFilter] = useState("all");
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [priceFilter, setPriceFilter] = useState(defaultPriceFilter);
   const [categoryState, setCategoryState] = useState(categoryFilter);
   const { location } = useLocation();
 
