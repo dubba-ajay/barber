@@ -258,7 +258,7 @@ const AllStores: React.FC<AllStoresProps> = ({
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-background to-muted/30">
+    <section className="py-12 bg-background">
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className="text-center mb-12">
@@ -277,7 +277,7 @@ const AllStores: React.FC<AllStoresProps> = ({
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-white/50 backdrop-blur-sm border border-white/20 rounded-2xl p-6 mb-8">
+        <div className="bg-white border rounded-xl p-4 mb-6">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -285,14 +285,14 @@ const AllStores: React.FC<AllStoresProps> = ({
                 placeholder="Search stores, services, or areas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/70"
+                className="pl-10"
               />
             </div>
             
             <div className="flex flex-wrap gap-3">
               {categoryFilter === "all" && (
                 <Select value={categoryState} onValueChange={setCategoryState}>
-                  <SelectTrigger className="w-48 bg-white/70">
+                  <SelectTrigger className="w-48">
                     <Filter className="w-4 h-4 mr-2" />
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
@@ -307,7 +307,7 @@ const AllStores: React.FC<AllStoresProps> = ({
               )}
               
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40 bg-white/70">
+                <SelectTrigger className="w-40">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -319,7 +319,7 @@ const AllStores: React.FC<AllStoresProps> = ({
               </Select>
               
               <Select value={priceFilter} onValueChange={setPriceFilter}>
-                <SelectTrigger className="w-32 bg-white/70">
+                <SelectTrigger className="w-32">
                   <SelectValue placeholder="Price" />
                 </SelectTrigger>
                 <SelectContent>
@@ -341,7 +341,7 @@ const AllStores: React.FC<AllStoresProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStores.map((store) => (
             <Link key={store.id} to={getCategoryLink(store)}>
-              <Card className="overflow-hidden hover:shadow-elegant transition-all duration-300 cursor-pointer group h-full">
+              <Card className="overflow-hidden hover:shadow-soft transition-colors duration-200 cursor-pointer group h-full border">
                 <div className="relative h-48">
                   <img 
                     src={store.image} 
