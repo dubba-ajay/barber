@@ -192,6 +192,8 @@ interface AllStoresProps {
   categoryFilter?: string;
   title?: string;
   description?: string;
+  defaultPriceFilter?: "all" | "₹" | "₹₹" | "₹₹₹";
+  defaultSortBy?: "rating" | "distance" | "price" | "reviews";
 }
 
 const AllStores: React.FC<AllStoresProps> = ({ 
