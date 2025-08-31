@@ -9,7 +9,7 @@ const NailStudios = () => {
       <Header />
       <main className="pt-16 space-y-12">
         <NailStudiosHeroSlider />
-        <AllStores categoryFilter="nail-studios" title="Nail Studios" description="Creative nail art, extensions, and professional care" />
+        <MensStoresModern category="nail-studios" />
       </main>
       <Footer />
     </div>
