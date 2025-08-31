@@ -9,7 +9,7 @@ const MensHair = () => {
       <Header />
       <main className="pt-16 space-y-12">
         <MensHeroSlider />
-        <MensStoresModern />
+        <MensStoresModern category="mens-hair" />
       </main>
       <Footer />
     </div>
