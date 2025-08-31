@@ -29,18 +29,35 @@ const SalonDetail = () => {
   const [selectedService, setSelectedService] = useState<{ id: number; name: string; price: string; duration: string; homeVisit: boolean; salonVisit: boolean } | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
-  const baseServices = [
-    { id: 1, name: "Men’s Haircut", price: "₹500", duration: "30 min", homeVisit: true, salonVisit: true },
-    { id: 2, name: "Beard Grooming", price: "₹299", duration: "20 min", homeVisit: true, salonVisit: true },
-    { id: 3, name: "Facial Treatment", price: "₹1499", duration: "60 min", homeVisit: true, salonVisit: true },
-    { id: 4, name: "Hair Color", price: "₹1999", duration: "90 min", homeVisit: true, salonVisit: true }
-  ];
-  const womensAddons = [
-    { id: 5, name: "Bridal Makeup", price: "₹4999", duration: "120 min", homeVisit: true, salonVisit: true },
-  ];
-  const categoryServices = store?.category === "womens-beauty" || store?.category === "makeup-artists"
-    ? [...baseServices, ...womensAddons]
-    : baseServices;
+  const servicesByCategory: Record<string, { id: number; name: string; price: string; duration: string; homeVisit: boolean; salonVisit: boolean }[]> = {
+    "mens-hair": [
+      { id: 1, name: "Men’s Haircut", price: "₹500", duration: "30 min", homeVisit: true, salonVisit: true },
+      { id: 2, name: "Beard Grooming", price: "₹299", duration: "20 min", homeVisit: true, salonVisit: true },
+      { id: 3, name: "Facial Treatment", price: "₹1499", duration: "60 min", homeVisit: true, salonVisit: true },
+      { id: 4, name: "Hair Color", price: "₹1999", duration: "90 min", homeVisit: true, salonVisit: true },
+    ],
+    "womens-beauty": [
+      { id: 11, name: "Haircut & Styling", price: "₹799", duration: "45 min", homeVisit: false, salonVisit: true },
+      { id: 12, name: "Facial Treatment", price: "₹1499", duration: "60 min", homeVisit: true, salonVisit: true },
+      { id: 13, name: "Color & Highlights", price: "₹2499", duration: "120 min", homeVisit: false, salonVisit: true },
+      { id: 14, name: "Waxing (Full)", price: "₹699", duration: "40 min", homeVisit: true, salonVisit: true },
+      { id: 15, name: "Bridal Makeup Trial", price: "₹2999", duration: "90 min", homeVisit: true, salonVisit: true },
+    ],
+    "nail-studios": [
+      { id: 21, name: "Classic Manicure", price: "₹399", duration: "30 min", homeVisit: false, salonVisit: true },
+      { id: 22, name: "Gel Manicure", price: "₹599", duration: "45 min", homeVisit: false, salonVisit: true },
+      { id: 23, name: "Pedicure", price: "₹499", duration: "45 min", homeVisit: false, salonVisit: true },
+      { id: 24, name: "Nail Extensions", price: "₹1499", duration: "90 min", homeVisit: false, salonVisit: true },
+      { id: 25, name: "Nail Art (per set)", price: "₹699", duration: "45 min", homeVisit: false, salonVisit: true },
+    ],
+    "makeup-artists": [
+      { id: 31, name: "Party Makeup", price: "₹1999", duration: "90 min", homeVisit: true, salonVisit: true },
+      { id: 32, name: "Bridal Makeup", price: "₹4999", duration: "120 min", homeVisit: true, salonVisit: true },
+      { id: 33, name: "Hairstyling", price: "₹799", duration: "45 min", homeVisit: true, salonVisit: true },
+      { id: 34, name: "Saree Draping", price: "₹499", duration: "30 min", homeVisit: true, salonVisit: true },
+    ],
+  };
+  const categoryServices = servicesByCategory[store?.category || "mens-hair"] || servicesByCategory["mens-hair"];
 
   return (
     <div className="min-h-screen flex flex-col">
