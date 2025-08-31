@@ -9,7 +9,7 @@ const MakeupArtists = () => {
       <Header />
       <main className="pt-16 space-y-12">
         <MakeupArtistsHeroSlider />
-        <AllStores categoryFilter="makeup-artists" title="Makeup Artists" description="Professional makeup for weddings, parties, and events" />
+        <MensStoresModern category="makeup-artists" />
       </main>
       <Footer />
     </div>
