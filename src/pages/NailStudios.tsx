@@ -8,7 +8,7 @@ const NailStudios = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <CategoryHeroSlider defaultCategory="nail-studios" />
+        <CategoryHeroSlider category="nail-studios" showTabs={false} />
         <MensStoresModern category="nail-studios" />
       </main>
       <Footer />
