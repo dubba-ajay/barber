@@ -52,6 +52,7 @@ const CleanHero = () => {
               Showing results for {location.city}, India
             </div>
           )}
+          <TopRatedHeroStores />
         </div>
       </div>
     </section>
