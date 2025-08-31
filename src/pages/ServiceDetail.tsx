@@ -32,7 +32,7 @@ const timeSlots = [
 
 const ServiceDetail = () => {
   const { id } = useParams();
-  const service = servicesCatalog[Number(id) as 1 | 2 | 3];
+  const service = servicesCatalog[Number(id || 0)];
 
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
