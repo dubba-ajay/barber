@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import NailStudiosHeroSlider from "@/components/features/NailStudiosHeroSlider";
+import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 import MensStoresModern from "@/components/features/MensStoresModern";
 
 const NailStudios = () => {
@@ -8,7 +8,7 @@ const NailStudios = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <NailStudiosHeroSlider />
+        <CategoryHeroSlider defaultCategory="nail-studios" />
         <MensStoresModern category="nail-studios" />
       </main>
       <Footer />
