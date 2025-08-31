@@ -156,5 +156,3 @@ export default function MensStoresModern() {
     </section>
   );
 }
-
-export default MensStoresModern;
