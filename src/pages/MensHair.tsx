@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import MensHeroSlider from "@/components/features/MensHeroSlider";
+import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 import MensStoresModern from "@/components/features/MensStoresModern";
 
 const MensHair = () => {
@@ -8,7 +8,7 @@ const MensHair = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <MensHeroSlider />
+        <CategoryHeroSlider defaultCategory="mens-hair" />
         <MensStoresModern category="mens-hair" />
       </main>
       <Footer />
