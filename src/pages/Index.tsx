@@ -1,10 +1,11 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CleanHero from "@/components/features/CleanHero";
-import ServiceCategories from "@/components/features/ServiceCategories";
+// removed ServiceCategories for modern layout
 import FeaturedServices from "@/components/features/FeaturedServices";
 import FeaturedStores from "@/components/features/FeaturedStores";
-import HomeAvailabilityPackages from "@/components/features/HomeAvailabilityPackages";
+import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
+// removed HomeAvailabilityPackages for modern layout
 
 const Index = () => {
   return (
@@ -12,8 +13,7 @@ const Index = () => {
       <Header />
       <main className="pt-16 space-y-16">
         <CleanHero />
-        <ServiceCategories />
-        <HomeAvailabilityPackages />
+        <TopRatedHeroStores />
         <FeaturedServices />
         <FeaturedStores />
       </main>
