@@ -81,7 +81,10 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
     setSelectedDate(date);
     setSelectedTime(undefined);
     if (date) {
-      setAvailableSlots(getAvailability(date));
+      const base = getAvailability(date);
+      const key = date.toISOString().slice(0, 10);
+      const booked = readBooked(salon.id, key);
+      setAvailableSlots(base.filter((t) => !booked.includes(t)));
     }
   };
 
