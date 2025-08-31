@@ -8,7 +8,7 @@ const WomensBeauty = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <CategoryHeroSlider defaultCategory="womens-beauty" />
+        <CategoryHeroSlider category="womens-beauty" showTabs={false} />
         <MensStoresModern category="womens-beauty" />
       </main>
       <Footer />
