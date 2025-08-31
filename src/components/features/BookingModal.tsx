@@ -26,6 +26,7 @@ interface Salon {
 
 interface BookingModalProps {
   service: Service | null;
+  services: Service[];
   salon: Salon;
   isOpen: boolean;
   onClose: () => void;
@@ -57,12 +58,17 @@ const writeBooked = (salonId: number, dateStr: string, slots: string[]) => {
   localStorage.setItem(bookingKey(salonId, dateStr), JSON.stringify(Array.from(new Set(slots))));
 };
 
-const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) => {
+const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModalProps) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedLocation, setSelectedLocation] = useState<"salon" | "home">("salon");
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(service?.id ?? null);
   const dateKey = useMemo(() => (selectedDate ? selectedDate.toISOString().slice(0, 10) : undefined), [selectedDate]);
+
+  useEffect(() => {
+    setSelectedServiceId(service?.id ?? null);
+  }, [service?.id]);
 
   useEffect(() => {
     const onStorage = (e: StorageEvent) => {
@@ -89,23 +95,25 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
   };
 
   const handleBooking = () => {
-    if (selectedDate && selectedTime && service) {
+    const currentService = services.find(s => s.id === selectedServiceId) || service;
+    if (selectedDate && selectedTime && currentService) {
       const key = selectedDate.toISOString().slice(0, 10);
       const booked = readBooked(salon.id, key);
       if (!booked.includes(selectedTime)) {
         writeBooked(salon.id, key, [...booked, selectedTime]);
       }
-      alert(`Booking confirmed!\n\nService: ${service.name}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nPrice: ${service.price}`);
+      alert(`Booking confirmed!\n\nService: ${currentService.name}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nPrice: ${currentService.price}`);
       setAvailableSlots((prev) => prev.filter((t) => t !== selectedTime));
       onClose();
     }
   };
 
-  const canBook = selectedDate && selectedTime && service;
-  const homePrice = service && selectedLocation === "home" ? `${service.price} + ₹100` : service?.price || "₹0";
+  const currentService = services.find(s => s.id === selectedServiceId) || service || null;
+  const canBook = selectedDate && selectedTime && currentService;
+  const homePrice = currentService && selectedLocation === "home" ? `${currentService.price} + ₹100` : currentService?.price || "₹0";
 
   // Don't render if service is null
-  if (!service) {
+  if (!currentService) {
     return null;
   }
 
@@ -114,7 +122,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-mens-primary">
-            Book {service.name}
+            Book {currentService.name}
           </DialogTitle>
           <div className="flex items-center space-x-2 text-muted-foreground">
             <MapPin className="w-4 h-4" />
@@ -128,7 +136,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>{service.name}</span>
+                  <span>{currentService.name}</span>
                   <Badge variant="secondary" className="text-lg font-bold">
                     {homePrice}
                   </Badge>
@@ -138,15 +146,32 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span>{service.duration}</span>
+                    <span>{currentService.duration}</span>
                   </div>
                 </div>
 
                 {/* Location Selection */}
                 <div className="space-y-3">
-                  <h4 className="font-semibold">Choose Location:</h4>
+                  <h4 className="font-semibold">Choose Service:</h4>
                   <div className="grid grid-cols-1 gap-3">
-                    {service.salonVisit && (
+                    {services.map((svc) => (
+                      <button
+                        key={svc.id}
+                        onClick={() => setSelectedServiceId(svc.id)}
+                        className={`p-3 border rounded-lg flex items-center justify-between transition-all ${selectedServiceId === svc.id ? "border-mens-primary bg-mens-secondary" : "border-border hover:border-mens-primary"}`}
+                      >
+                        <div className="text-left">
+                          <div className="font-medium">{svc.name}</div>
+                          <div className="text-xs text-muted-foreground">{svc.duration}</div>
+                        </div>
+                        <Badge>{svc.price}</Badge>
+                      </button>
+                    ))}
+                  </div>
+
+                  <h4 className="font-semibold mt-6">Choose Location:</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {currentService.salonVisit && (
                       <button
                         onClick={() => setSelectedLocation("salon")}
                         className={`p-4 border rounded-lg flex items-center space-x-3 transition-all ${
@@ -158,7 +183,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                         <Building className="w-5 h-5 text-mens-primary" />
                         <div className="text-left">
                           <div className="font-medium">At Salon</div>
-                          <div className="text-sm text-muted-foreground">{service.price}</div>
+                          <div className="text-sm text-muted-foreground">{currentService.price}</div>
                         </div>
                         {selectedLocation === "salon" && (
                           <Check className="w-5 h-5 text-mens-primary ml-auto" />
@@ -166,7 +191,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                       </button>
                     )}
                     
-                    {service.homeVisit && (
+                    {currentService.homeVisit && (
                       <button
                         onClick={() => setSelectedLocation("home")}
                         className={`p-4 border rounded-lg flex items-center space-x-3 transition-all ${
@@ -178,7 +203,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                         <Home className="w-5 h-5 text-mens-primary" />
                         <div className="text-left">
                           <div className="font-medium">Home Visit</div>
-                          <div className="text-sm text-muted-foreground">{service.price} + ₹100</div>
+                          <div className="text-sm text-muted-foreground">{currentService.price} + ₹100</div>
                         </div>
                         {selectedLocation === "home" && (
                           <Check className="w-5 h-5 text-mens-primary ml-auto" />
@@ -252,7 +277,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
             <div>
               {canBook && (
                 <div className="text-sm text-muted-foreground">
-                  <p><strong>Service:</strong> {service.name}</p>
+                  <p><strong>Service:</strong> {currentService.name}</p>
                   <p><strong>Date:</strong> {selectedDate?.toDateString()}</p>
                   <p><strong>Time:</strong> {selectedTime}</p>
                   <p><strong>Location:</strong> {selectedLocation === "salon" ? "At Salon" : "Home Visit"}</p>
