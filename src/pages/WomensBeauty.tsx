@@ -9,7 +9,7 @@ const WomensBeauty = () => {
       <Header />
       <main className="pt-16 space-y-12">
         <WomensBeautyHeroSlider />
-        <AllStores categoryFilter="womens-beauty" title="Women's Hair & Beauty" description="Book premium beauty services with trusted professionals" />
+        <MensStoresModern category="womens-beauty" />
       </main>
       <Footer />
     </div>
