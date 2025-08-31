@@ -19,32 +19,32 @@ export default function ModernHero() {
     <section className="relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-purple-50" />
-        <div className="pointer-events-none absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-200/30 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-purple-200/30 blur-3xl" />
+        <div className="absolute inset-0 bg-white" />
+        <div className="pointer-events-none absolute -top-32 right-[-10%] h-[28rem] w-[28rem] rounded-full bg-emerald-200/30 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-32 left-[-10%] h-[28rem] w-[28rem] rounded-full bg-purple-200/30 blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-6 py-16">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
+      <div className="container mx-auto px-4 lg:px-6 py-14">
+        <div className="grid items-center gap-12 lg:grid-cols-12">
           {/* Left copy */}
-          <div>
-            <div className="inline-flex items-center rounded-full border bg-white/70 px-3 py-1 text-sm text-muted-foreground shadow-sm backdrop-blur">
-              <Sparkles className="mr-2 h-4 w-4 text-emerald-600" /> Book in minutes • INR pricing
+          <div className="lg:col-span-7">
+            <div className="inline-flex items-center rounded-full border bg-white px-3 py-1 text-xs text-muted-foreground shadow-sm">
+              <Sparkles className="mr-2 h-4 w-4 text-emerald-600" /> Transparent pricing • Instant booking
             </div>
-            <h1 className="mt-4 text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-              Look great. Feel amazing.
+            <h1 className="mt-4 text-5xl font-bold leading-tight tracking-tight md:text-6xl">
+              Book beauty & grooming near you
             </h1>
-            <p className="mt-3 text-lg text-muted-foreground md:text-xl">
-              Find top‑rated pros for hair, beauty, nails and makeup — near you.
+            <p className="mt-3 text-base text-muted-foreground md:text-lg">
+              Clean, modern experience to find trusted professionals across all services.
             </p>
 
             {/* Filters card */}
-            <div className="mt-6 rounded-2xl border bg-white/80 p-4 shadow-xl backdrop-blur">
+            <div className="mt-6 rounded-3xl border bg-white p-4 shadow-xl ring-1 ring-black/5">
               <SearchFiltersBar />
-              <div className="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
                 <span className="inline-flex items-center"><Star className="mr-1 h-4 w-4 fill-yellow-400 text-yellow-400" /> 4.8 avg rating</span>
                 <span>•</span>
-                <span>Trusted by 1M+ users</span>
+                <span>1M+ bookings</span>
               </div>
             </div>
 
@@ -52,15 +52,15 @@ export default function ModernHero() {
               <Button size="lg" className="px-6">
                 <Calendar className="mr-2 h-5 w-5" /> Book now
               </Button>
-              <span className="text-sm text-muted-foreground">No hidden fees • Instant confirmation</span>
+              <span className="text-sm text-muted-foreground">No hidden fees</span>
             </div>
           </div>
 
           {/* Right: category gallery */}
-          <div className="grid grid-cols-2 gap-4">
-            {categories.map((c, i) => (
-              <Link key={c.key} to={c.href} className="group relative overflow-hidden rounded-2xl border bg-white shadow hover:shadow-lg transition-shadow">
-                <img src={c.image} alt={c.label} className="h-36 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+            {categories.map((c) => (
+              <Link key={c.key} to={c.href} className="group relative overflow-hidden rounded-3xl border bg-white shadow-sm ring-1 ring-black/5 transition-all hover:shadow-md">
+                <img src={c.image} alt={c.label} className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
                 <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-white">
                   <div className="text-sm font-semibold drop-shadow">{c.label}</div>
