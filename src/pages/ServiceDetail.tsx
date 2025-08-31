@@ -20,6 +20,8 @@ const servicesCatalog: Record<number, Service> = {
   1: { id: 1, name: "Men’s Haircut", description: "Includes consultation, trimming and styling.", price: "₹500", duration: "30 min" },
   2: { id: 2, name: "Beard Grooming", description: "Beard trim and shape with hot towel.", price: "₹299", duration: "20 min" },
   3: { id: 3, name: "Facial Treatment", description: "Deep cleansing and skin rejuvenation.", price: "₹1499", duration: "60 min" },
+  4: { id: 4, name: "Hair Color", description: "Professional hair coloring with premium products.", price: "₹1999", duration: "90 min" },
+  5: { id: 5, name: "Bridal Makeup", description: "Bridal makeup trial/session with premium products.", price: "₹4999", duration: "120 min" },
 };
 
 const timeSlots = [
