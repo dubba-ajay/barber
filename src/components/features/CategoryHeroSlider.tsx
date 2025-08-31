@@ -28,11 +28,11 @@ const DATA: Record<CategoryKey, { id: number; name: string; image: string; ratin
   ],
 };
 
-export default function CategoryHeroSlider({ defaultCategory = "womens-beauty" as CategoryKey }: { defaultCategory?: CategoryKey }) {
-  const [category, setCategory] = useState<CategoryKey>(defaultCategory);
+export default function CategoryHeroSlider({ category, showTabs = true }: { category: CategoryKey; showTabs?: boolean }) {
+  const [cat, setCat] = useState<CategoryKey>(category);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const slides = useMemo(() => DATA[category], [category]);
+  const slides = useMemo(() => DATA[cat], [cat]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,7 +43,7 @@ export default function CategoryHeroSlider({ defaultCategory = "womens-beauty" a
 
   useEffect(() => {
     setCurrentSlide(0);
-  }, [category]);
+  }, [cat]);
 
   const nextSlide = () => setCurrentSlide((p) => (p + 1) % slides.length);
   const prevSlide = () => setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
@@ -65,20 +65,22 @@ export default function CategoryHeroSlider({ defaultCategory = "womens-beauty" a
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
       </div>
 
-      {/* Category Tabs */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 bg-black/20 backdrop-blur-md p-2 rounded-full border border-white/20">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => setCategory(t.key)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              category === t.key ? "bg-white text-gray-900" : "text-white hover:bg-white/20"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+      {/* Category Tabs (optional) */}
+      {showTabs && (
+        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 bg-black/20 backdrop-blur-md p-2 rounded-full border border-white/20">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setCat(t.key)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                cat === t.key ? "bg-white text-gray-900" : "text-white hover:bg-white/20"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Overlay Content */}
       <div className="absolute inset-0 flex items-end">
