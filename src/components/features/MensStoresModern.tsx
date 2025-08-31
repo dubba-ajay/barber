@@ -17,7 +17,7 @@ const priceTiers = [
 
 type PriceTier = typeof priceTiers[number]["value"];
 
-default function MensStoresModern() {
+export default function MensStoresModern() {
   const [query, setQuery] = useState("");
   const [price, setPrice] = useState<PriceTier>("all");
   const [sortBy, setSortBy] = useState<"rating" | "distance" | "price" | "reviews">("rating");
