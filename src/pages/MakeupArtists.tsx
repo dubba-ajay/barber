@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import MakeupArtistsHeroSlider from "@/components/features/MakeupArtistsHeroSlider";
+import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 import MensStoresModern from "@/components/features/MensStoresModern";
 
 const MakeupArtists = () => {
@@ -8,7 +8,7 @@ const MakeupArtists = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <MakeupArtistsHeroSlider />
+        <CategoryHeroSlider defaultCategory="makeup-artists" />
         <MensStoresModern category="makeup-artists" />
       </main>
       <Footer />
