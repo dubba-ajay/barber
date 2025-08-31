@@ -8,7 +8,7 @@ const MakeupArtists = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <CategoryHeroSlider defaultCategory="makeup-artists" />
+        <CategoryHeroSlider category="makeup-artists" showTabs={false} />
         <MensStoresModern category="makeup-artists" />
       </main>
       <Footer />
