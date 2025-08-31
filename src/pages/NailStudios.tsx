@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import NailStudiosHeroSlider from "@/components/features/NailStudiosHeroSlider";
-import AllStores from "@/components/features/AllStores";
+import MensStoresModern from "@/components/features/MensStoresModern";
 
 const NailStudios = () => {
   return (
