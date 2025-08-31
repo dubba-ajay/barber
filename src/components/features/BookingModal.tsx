@@ -43,6 +43,20 @@ const getAvailability = (date: Date) => {
   return availableSlots;
 };
 
+// Local booking store to hide booked slots across tabs in the same browser
+const bookingKey = (salonId: number, dateStr: string) => `bookings:${salonId}:${dateStr}`;
+const readBooked = (salonId: number, dateStr: string): string[] => {
+  try {
+    const raw = localStorage.getItem(bookingKey(salonId, dateStr));
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+};
+const writeBooked = (salonId: number, dateStr: string, slots: string[]) => {
+  localStorage.setItem(bookingKey(salonId, dateStr), JSON.stringify(Array.from(new Set(slots))));
+};
+
 const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
