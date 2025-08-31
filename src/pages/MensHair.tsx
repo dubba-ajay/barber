@@ -8,7 +8,7 @@ const MensHair = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-12">
-        <CategoryHeroSlider defaultCategory="mens-hair" />
+        <CategoryHeroSlider category="mens-hair" showTabs={false} />
         <MensStoresModern category="mens-hair" />
       </main>
       <Footer />
