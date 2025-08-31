@@ -17,16 +17,25 @@ const priceTiers = [
 
 type PriceTier = typeof priceTiers[number]["value"];
 
-export default function MensStoresModern() {
+type CategoryKey = "mens-hair" | "womens-beauty" | "nail-studios" | "makeup-artists";
+
+export default function MensStoresModern({ category = "mens-hair" }: { category?: CategoryKey }) {
   const [query, setQuery] = useState("");
   const [price, setPrice] = useState<PriceTier>("all");
   const [sortBy, setSortBy] = useState<"rating" | "distance" | "price" | "reviews">("rating");
 
-  const mensStores = useMemo(() => allStores.filter(s => s.category === "mens-hair"), []);
+  const stores = useMemo(() => allStores.filter(s => s.category === category), [category]);
+
+  const labels: Record<CategoryKey, { unit: string; placeholder: string }> = {
+    "mens-hair": { unit: "barber", placeholder: "Search barbers, areas, or specialties" },
+    "womens-beauty": { unit: "salon", placeholder: "Search salons, areas, or services" },
+    "nail-studios": { unit: "studio", placeholder: "Search nail studios, areas, or services" },
+    "makeup-artists": { unit: "artist", placeholder: "Search makeup artists, areas, or services" },
+  };
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    let list = mensStores.filter(s =>
+    let list = stores.filter(s =>
       !q ||
       s.name.toLowerCase().includes(q) ||
       s.address.toLowerCase().includes(q) ||
@@ -43,7 +52,7 @@ export default function MensStoresModern() {
       }
     });
     return list;
-  }, [mensStores, price, sortBy, query]);
+  }, [stores, price, sortBy, query]);
 
   return (
     <section className="py-12">
@@ -53,7 +62,7 @@ export default function MensStoresModern() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
             <div className="relative md:col-span-2">
               <Input
-                placeholder="Search barbers, areas, or specialties"
+                placeholder={labels[category].placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="h-11"
@@ -83,7 +92,7 @@ export default function MensStoresModern() {
             </Select>
           </div>
           <div className="mt-3 text-sm text-muted-foreground">
-            Showing {filtered.length} barber{filtered.length !== 1 ? "s" : ""}
+            Showing {filtered.length} {labels[category].unit}{filtered.length !== 1 ? "s" : ""}
           </div>
         </div>
 
