@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "@/contexts/LocationContext";
 import SearchFiltersBar from "@/components/features/SearchFiltersBar";
-import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
 
 const CleanHero = () => {
   const [query, setQuery] = useState("");
