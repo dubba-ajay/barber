@@ -10,6 +10,10 @@ import { useLocation } from "@/contexts/LocationContext";
 import salon1 from "@/assets/salon-1.jpg";
 import salon2 from "@/assets/salon-2.jpg";
 import salon3 from "@/assets/salon-3.jpg";
+import mensHero from "@/assets/mens-hair-hero.jpg";
+import womensHero from "@/assets/womens-beauty-hero.jpg";
+import nailsHero from "@/assets/nail-studio-hero.jpg";
+import makeupHero from "@/assets/makeup-artist-hero.jpg";
 
 export const allStores = [
   // Men's Hair Stores
