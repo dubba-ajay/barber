@@ -33,8 +33,7 @@ const SalonDetail = () => {
     { id: 1, name: "Men’s Haircut", price: "₹500", duration: "30 min", homeVisit: true, salonVisit: true },
     { id: 2, name: "Beard Grooming", price: "₹299", duration: "20 min", homeVisit: true, salonVisit: true },
     { id: 3, name: "Facial Treatment", price: "₹1499", duration: "60 min", homeVisit: true, salonVisit: true },
-    { id: 4, name: "Hair Color", price: "₹1999", duration: "90 min", homeVisit: true, salonVisit: true },
-    { id: 6, name: "Haircut + Beard Package", price: "₹699", duration: "50 min", homeVisit: true, salonVisit: true },
+    { id: 4, name: "Hair Color", price: "₹1999", duration: "90 min", homeVisit: true, salonVisit: true }
   ];
   const womensAddons = [
     { id: 5, name: "Bridal Makeup", price: "₹4999", duration: "120 min", homeVisit: true, salonVisit: true },
