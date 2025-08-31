@@ -90,7 +90,13 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
 
   const handleBooking = () => {
     if (selectedDate && selectedTime && service) {
+      const key = selectedDate.toISOString().slice(0, 10);
+      const booked = readBooked(salon.id, key);
+      if (!booked.includes(selectedTime)) {
+        writeBooked(salon.id, key, [...booked, selectedTime]);
+      }
       alert(`Booking confirmed!\n\nService: ${service.name}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nPrice: ${service.price}`);
+      setAvailableSlots((prev) => prev.filter((t) => t !== selectedTime));
       onClose();
     }
   };
