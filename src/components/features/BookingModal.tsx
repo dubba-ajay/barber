@@ -62,6 +62,20 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedLocation, setSelectedLocation] = useState<"salon" | "home">("salon");
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const dateKey = useMemo(() => (selectedDate ? selectedDate.toISOString().slice(0, 10) : undefined), [selectedDate]);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (!dateKey) return;
+      if (e.key === bookingKey(salon.id, dateKey)) {
+        const base = selectedDate ? getAvailability(selectedDate) : [];
+        const booked = readBooked(salon.id, dateKey);
+        setAvailableSlots(base.filter((t) => !booked.includes(t)));
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [dateKey, salon.id, selectedDate]);
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
