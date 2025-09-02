@@ -7,6 +7,10 @@ import { useLocation } from "@/contexts/LocationContext";
 import salon1 from "@/assets/salon-1.jpg";
 import salon2 from "@/assets/salon-2.jpg";
 import salon3 from "@/assets/salon-3.jpg";
+import mensHero from "@/assets/mens-hair-hero.jpg";
+import womensHero from "@/assets/womens-beauty-hero.jpg";
+import nailsHero from "@/assets/nail-studio-hero.jpg";
+import makeupHero from "@/assets/makeup-artist-hero.jpg";
 
 const featuredStores = [
   {
@@ -18,7 +22,7 @@ const featuredStores = [
     reviews: 2450,
     distance: "0.5 km",
     address: "Connaught Place, Delhi",
-    image: salon1,
+    image: mensHero,
     priceRange: "₹₹",
     specialties: ["Premium Cuts", "Beard Styling"],
     isTopRated: true,
@@ -36,7 +40,7 @@ const featuredStores = [
     reviews: 3120,
     distance: "0.8 km",
     address: "Bandra, Mumbai",
-    image: salon2,
+    image: womensHero,
     priceRange: "₹₹₹",
     specialties: ["Hair Styling", "Facials"],
     isTopRated: true,
@@ -54,7 +58,7 @@ const featuredStores = [
     reviews: 2340,
     distance: "0.6 km",
     address: "Koramangala, Bangalore",
-    image: salon3,
+    image: nailsHero,
     priceRange: "₹₹",
     specialties: ["Nail Art", "Gel Extensions"],
     isTopRated: true,
@@ -72,7 +76,7 @@ const featuredStores = [
     reviews: 2980,
     distance: "0.7 km",
     address: "Hi-Tech City, Hyderabad",
-    image: salon1,
+    image: makeupHero,
     priceRange: "₹₹₹",
     specialties: ["Bridal Makeup", "Events"],
     isTopRated: true,
@@ -90,7 +94,7 @@ const featuredStores = [
     reviews: 1890,
     distance: "1.2 km",
     address: "Park Street, Kolkata",
-    image: salon2,
+    image: mensHero,
     priceRange: "₹",
     specialties: ["Traditional Cuts", "Shaves"],
     isVerified: true,
@@ -107,7 +111,7 @@ const featuredStores = [
     reviews: 1890,
     distance: "2.2 km",
     address: "Jaipur, Rajasthan",
-    image: salon3,
+    image: womensHero,
     priceRange: "₹₹₹",
     specialties: ["Luxury Treatments", "Wellness"],
     isVerified: true,
@@ -131,7 +135,7 @@ const FeaturedStores = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
+    <section className="py-16 bg-background">
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className="text-center mb-12">
@@ -158,23 +162,16 @@ const FeaturedStores = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredStores.map((store) => (
             <Link key={store.id} to={store.link}>
-              <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group h-full border-2 border-orange-200 hover:border-orange-400 bg-white">
-                <div className="relative h-48">
+              <Card className="group overflow-hidden border-0 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-gradient-to-b from-white to-white/60 cursor-pointer">
+                <div className="relative h-52">
                   <img 
                     src={store.image} 
                     alt={store.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   
-                  {/* Indian-style overlay pattern */}
-                  <div className="absolute top-2 left-2 w-12 h-12 opacity-20">
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-yellow-300">
-                      <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="4"/>
-                      <circle cx="50" cy="50" r="20" fill="currentColor"/>
-                    </svg>
-                  </div>
-                  
+                                    
                   {/* Top Badges */}
                   <div className="absolute top-3 right-3 flex flex-col gap-2">
                     <Badge className="bg-gradient-to-r from-yellow-400 to-orange-400 text-gray-900 font-bold text-xs border-0 shadow-lg">
@@ -190,7 +187,7 @@ const FeaturedStores = () => {
                   </div>
 
                   {/* Store Info */}
-                  <div className="absolute bottom-3 left-3 text-white">
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-2xl">{store.emoji}</span>
                       <h3 className="text-lg font-bold">{store.name}</h3>
@@ -246,10 +243,7 @@ const FeaturedStores = () => {
                     </div>
                   </div>
                   
-                  <Button 
-                    size="sm"
-                    className="w-full text-sm group-hover:scale-105 transition-transform bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold border-0 rounded-xl shadow-lg"
-                  >
+                  <Button size="sm" className="w-full text-sm group-hover:scale-105 transition-transform">
                     🎯 View Details
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>

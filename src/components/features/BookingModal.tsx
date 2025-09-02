@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -26,6 +26,7 @@ interface Salon {
 
 interface BookingModalProps {
   service: Service | null;
+  services: Service[];
   salon: Salon;
   isOpen: boolean;
   onClose: () => void;
@@ -43,32 +44,86 @@ const getAvailability = (date: Date) => {
   return availableSlots;
 };
 
-const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) => {
+// Local booking store to hide booked slots across tabs in the same browser
+const bookingKey = (salonId: number, dateStr: string) => `bookings:${salonId}:${dateStr}`;
+const readBooked = (salonId: number, dateStr: string): string[] => {
+  try {
+    const raw = localStorage.getItem(bookingKey(salonId, dateStr));
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+};
+const writeBooked = (salonId: number, dateStr: string, slots: string[]) => {
+  localStorage.setItem(bookingKey(salonId, dateStr), JSON.stringify(Array.from(new Set(slots))));
+};
+
+const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModalProps) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedLocation, setSelectedLocation] = useState<"salon" | "home">("salon");
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
+  const [selectedServiceIds, setSelectedServiceIds] = useState<number[]>(service?.id ? [service.id] : []);
+  const dateKey = useMemo(() => (selectedDate ? selectedDate.toISOString().slice(0, 10) : undefined), [selectedDate]);
+
+  useEffect(() => {
+    setSelectedServiceIds(service?.id ? [service.id] : []);
+  }, [service?.id]);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (!dateKey) return;
+      if (e.key === bookingKey(salon.id, dateKey)) {
+        const base = selectedDate ? getAvailability(selectedDate) : [];
+        const booked = readBooked(salon.id, dateKey);
+        setAvailableSlots(base.filter((t) => !booked.includes(t)));
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [dateKey, salon.id, selectedDate]);
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
     setSelectedTime(undefined);
     if (date) {
-      setAvailableSlots(getAvailability(date));
+      const base = getAvailability(date);
+      const key = date.toISOString().slice(0, 10);
+      const booked = readBooked(salon.id, key);
+      setAvailableSlots(base.filter((t) => !booked.includes(t)));
     }
   };
 
   const handleBooking = () => {
-    if (selectedDate && selectedTime && service) {
-      alert(`Booking confirmed!\n\nService: ${service.name}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nPrice: ${service.price}`);
+    const selected = services.filter(s => selectedServiceIds.includes(s.id));
+    if (selectedDate && selectedTime && selected.length > 0) {
+      const key = selectedDate.toISOString().slice(0, 10);
+      const booked = readBooked(salon.id, key);
+      if (!booked.includes(selectedTime)) {
+        writeBooked(salon.id, key, [...booked, selectedTime]);
+      }
+      const names = selected.map(s => s.name).join(", ");
+      const parsePrice = (p: string) => parseInt(p.replace(/[^\d]/g, "")) || 0;
+      const baseTotal = selected.reduce((sum, s) => sum + parsePrice(s.price), 0);
+      const total = baseTotal + (selectedLocation === "home" ? 100 : 0);
+      alert(`Booking confirmed!\n\nServices: ${names}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nTotal: ₹${total.toLocaleString('en-IN')}`);
+      setAvailableSlots((prev) => prev.filter((t) => t !== selectedTime));
       onClose();
     }
   };
 
-  const canBook = selectedDate && selectedTime && service;
-  const homePrice = service && selectedLocation === "home" ? `${service.price} + ₹100` : service?.price || "₹0";
+  const selectedServices = useMemo(() => services.filter(s => selectedServiceIds.includes(s.id)), [services, selectedServiceIds]);
+  const parsePrice = (p: string) => parseInt(p.replace(/[^\d]/g, "")) || 0;
+  const baseTotal = selectedServices.reduce((sum, s) => sum + parsePrice(s.price), 0);
+  const total = baseTotal + (selectedLocation === "home" ? 100 : 0);
+  const priceDisplay = `₹${total.toLocaleString('en-IN')}`;
+  const totalDuration = selectedServices.reduce((sum, s) => sum + (parseInt(s.duration) || 0), 0);
+  const allowSalon = selectedServices.length === 0 ? true : selectedServices.every(s => s.salonVisit);
+  const allowHome = selectedServices.length === 0 ? true : selectedServices.every(s => s.homeVisit);
+  const canBook = Boolean(selectedDate && selectedTime && selectedServices.length > 0);
 
-  // Don't render if service is null
-  if (!service) {
+  // Render even if no service preselected; user can choose from list
+  if (!services || services.length === 0) {
     return null;
   }
 
@@ -77,7 +132,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-mens-primary">
-            Book {service.name}
+            Book Services
           </DialogTitle>
           <div className="flex items-center space-x-2 text-muted-foreground">
             <MapPin className="w-4 h-4" />
@@ -91,9 +146,9 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span>{service.name}</span>
+                  <span>{selectedServices.length > 0 ? `${selectedServices.length} selected${totalDuration ? ` • ${totalDuration} min` : ''}` : 'Select services'}</span>
                   <Badge variant="secondary" className="text-lg font-bold">
-                    {homePrice}
+                    {priceDisplay}
                   </Badge>
                 </CardTitle>
               </CardHeader>
@@ -101,15 +156,37 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span>{service.duration}</span>
+                    <span>{totalDuration ? `${totalDuration} min` : '—'}</span>
                   </div>
                 </div>
 
                 {/* Location Selection */}
                 <div className="space-y-3">
-                  <h4 className="font-semibold">Choose Location:</h4>
+                  <h4 className="font-semibold">Choose Service(s):</h4>
                   <div className="grid grid-cols-1 gap-3">
-                    {service.salonVisit && (
+                    {services.map((svc) => {
+                      const selected = selectedServiceIds.includes(svc.id);
+                      return (
+                        <button
+                          key={svc.id}
+                          onClick={() => {
+                            setSelectedServiceIds((prev) => prev.includes(svc.id) ? prev.filter((id) => id !== svc.id) : [...prev, svc.id]);
+                          }}
+                          className={`p-3 border rounded-lg flex items-center justify-between transition-all ${selected ? "border-mens-primary bg-mens-secondary" : "border-border hover:border-mens-primary"}`}
+                        >
+                          <div className="text-left">
+                            <div className="font-medium">{svc.name}</div>
+                            <div className="text-xs text-muted-foreground">{svc.duration}</div>
+                          </div>
+                          <Badge>{svc.price}</Badge>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <h4 className="font-semibold mt-6">Choose Location:</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {allowSalon && (
                       <button
                         onClick={() => setSelectedLocation("salon")}
                         className={`p-4 border rounded-lg flex items-center space-x-3 transition-all ${
@@ -121,7 +198,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                         <Building className="w-5 h-5 text-mens-primary" />
                         <div className="text-left">
                           <div className="font-medium">At Salon</div>
-                          <div className="text-sm text-muted-foreground">{service.price}</div>
+                          <div className="text-sm text-muted-foreground">₹{baseTotal.toLocaleString('en-IN')}</div>
                         </div>
                         {selectedLocation === "salon" && (
                           <Check className="w-5 h-5 text-mens-primary ml-auto" />
@@ -129,7 +206,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                       </button>
                     )}
                     
-                    {service.homeVisit && (
+                    {allowHome && (
                       <button
                         onClick={() => setSelectedLocation("home")}
                         className={`p-4 border rounded-lg flex items-center space-x-3 transition-all ${
@@ -141,7 +218,7 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
                         <Home className="w-5 h-5 text-mens-primary" />
                         <div className="text-left">
                           <div className="font-medium">Home Visit</div>
-                          <div className="text-sm text-muted-foreground">{service.price} + ₹100</div>
+                          <div className="text-sm text-muted-foreground">₹{(baseTotal + 100).toLocaleString('en-IN')}</div>
                         </div>
                         {selectedLocation === "home" && (
                           <Check className="w-5 h-5 text-mens-primary ml-auto" />
@@ -215,11 +292,11 @@ const BookingModal = ({ service, salon, isOpen, onClose }: BookingModalProps) =>
             <div>
               {canBook && (
                 <div className="text-sm text-muted-foreground">
-                  <p><strong>Service:</strong> {service.name}</p>
+                  <p><strong>Services:</strong> {selectedServices.map(s => s.name).join(', ')}</p>
                   <p><strong>Date:</strong> {selectedDate?.toDateString()}</p>
                   <p><strong>Time:</strong> {selectedTime}</p>
                   <p><strong>Location:</strong> {selectedLocation === "salon" ? "At Salon" : "Home Visit"}</p>
-                  <p><strong>Total:</strong> {homePrice}</p>
+                  <p><strong>Total:</strong> {priceDisplay}</p>
                 </div>
               )}
             </div>

@@ -18,9 +18,9 @@ All colors MUST be HSL.
     --popover-foreground: 222.2 84% 4.9%;
 
     /* Beauty Salon Primary Brand - Purple Gradient */
-    --primary: 280 100% 70%;
+    --primary: 164 70% 45%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 280 100% 80%;
+    --primary-glow: 164 70% 55%;
 
     /* Category-Specific Colors */
     --mens-primary: 215 28% 17%;
@@ -46,10 +46,10 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 280 100% 70%;
+    --ring: 164 70% 45%;
 
     /* Beauty Salon Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-primary: linear-gradient(135deg, hsl(164 70% 45%), hsl(164 70% 55%));
     --gradient-mens: linear-gradient(135deg, hsl(var(--mens-primary)), hsl(215 20% 25%));
     --gradient-womens: linear-gradient(135deg, hsl(var(--womens-primary)), hsl(330 81% 60%));
     --gradient-nails: linear-gradient(135deg, hsl(var(--nails-primary)), hsl(250 80% 70%));

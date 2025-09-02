@@ -16,6 +16,7 @@ import FreelancerDashboard from "./pages/FreelancerDashboard";
 import WorkerDashboard from "./pages/WorkerDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import NotFound from "./pages/NotFound";
+import ServiceDetail from "./pages/ServiceDetail";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/makeup-artists" element={<MakeupArtists />} />
             <Route path="/makeup-artists/salon/:id" element={<SalonDetail />} />
             <Route path="/all-stores" element={<AllStoresPage />} />
+            <Route path="/service/:id" element={<ServiceDetail />} />
             <Route path="/user-dashboard" element={<UserDashboard />} />
             <Route path="/store-owner-dashboard" element={<StoreOwnerDashboard />} />
             <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />

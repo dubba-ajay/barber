@@ -10,8 +10,12 @@ import { useLocation } from "@/contexts/LocationContext";
 import salon1 from "@/assets/salon-1.jpg";
 import salon2 from "@/assets/salon-2.jpg";
 import salon3 from "@/assets/salon-3.jpg";
+import mensHero from "@/assets/mens-hair-hero.jpg";
+import womensHero from "@/assets/womens-beauty-hero.jpg";
+import nailsHero from "@/assets/nail-studio-hero.jpg";
+import makeupHero from "@/assets/makeup-artist-hero.jpg";
 
-const allStores = [
+export const allStores = [
   // Men's Hair Stores
   {
     id: 101,
@@ -22,8 +26,8 @@ const allStores = [
     distance: "0.5 mi",
     address: "123 Main Street, Downtown",
     phone: "(555) 123-4567",
-    image: salon1,
-    priceRange: "$$",
+    image: mensHero,
+    priceRange: "₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Premium Cuts", "Beard Styling", "Hot Towel Service"],
     description: "Upscale men's grooming with traditional barbershop atmosphere",
@@ -39,8 +43,8 @@ const allStores = [
     distance: "1.2 mi",
     address: "456 Oak Avenue, Midtown",
     phone: "(555) 234-5678",
-    image: salon2,
-    priceRange: "$",
+    image: mensHero,
+    priceRange: "₹",
     openHours: "8:00 AM - 7:00 PM",
     specialties: ["Traditional Cuts", "Straight Razor Shaves", "Walk-ins Welcome"],
     description: "Traditional barbershop experience with skilled craftsmen",
@@ -55,8 +59,8 @@ const allStores = [
     distance: "2.1 mi",
     address: "789 Pine Street, Uptown",
     phone: "(555) 345-6789",
-    image: salon3,
-    priceRange: "$$$",
+    image: mensHero,
+    priceRange: "₹₹₹",
     openHours: "10:00 AM - 9:00 PM",
     specialties: ["Designer Cuts", "Hair Treatments", "VIP Service"],
     description: "Modern luxury grooming experience for the discerning gentleman",
@@ -74,8 +78,8 @@ const allStores = [
     distance: "0.8 km",
     address: "567 Beauty Avenue, Downtown",
     phone: "(555) 111-2222",
-    image: salon1,
-    priceRange: "$$$",
+    image: womensHero,
+    priceRange: "₹₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Hair Styling", "Facials", "Beauty Packages", "Bridal Services"],
     description: "Premium beauty treatments with expert stylists and relaxing atmosphere",
@@ -91,8 +95,8 @@ const allStores = [
     distance: "1.5 km",
     address: "890 Style Street, City Center",
     phone: "(555) 222-3333",
-    image: salon2,
-    priceRange: "$$",
+    image: womensHero,
+    priceRange: "₹₹",
     openHours: "8:00 AM - 9:00 PM",
     specialties: ["Hair Coloring", "Treatments", "Bridal Packages", "Extensions"],
     description: "Complete beauty transformation services with modern techniques",
@@ -107,8 +111,8 @@ const allStores = [
     distance: "2.2 km",
     address: "234 Luxury Lane, Uptown",
     phone: "(555) 333-4444",
-    image: salon3,
-    priceRange: "$$$",
+    image: womensHero,
+    priceRange: "₹₹₹",
     openHours: "10:00 AM - 7:00 PM",
     specialties: ["Luxury Treatments", "Hair Care", "Wellness", "Anti-Aging"],
     description: "Luxury beauty experience with personalized care and wellness focus",
@@ -126,8 +130,8 @@ const allStores = [
     distance: "0.6 km",
     address: "123 Nail Street, Downtown",
     phone: "(555) 111-2233",
-    image: salon1,
-    priceRange: "$$",
+    image: nailsHero,
+    priceRange: "₹₹",
     openHours: "9:00 AM - 8:00 PM",
     specialties: ["Nail Art", "Gel Extensions", "Classic Manicure", "3D Designs"],
     description: "Creative nail art and premium manicure services with artistic flair",
@@ -143,8 +147,8 @@ const allStores = [
     distance: "1.3 km",
     address: "456 Beauty Blvd, City Center",
     phone: "(555) 222-3344",
-    image: salon2,
-    priceRange: "$$$",
+    image: nailsHero,
+    priceRange: "₹₹₹",
     openHours: "8:00 AM - 9:00 PM",
     specialties: ["Luxury Pedicure", "Spa Treatments", "Nail Care", "Hand Treatments"],
     description: "Luxury nail care with relaxing spa experience and premium products",
@@ -162,8 +166,8 @@ const allStores = [
     distance: "0.7 km",
     address: "345 Glam Street, Downtown",
     phone: "(555) 111-2244",
-    image: salon1,
-    priceRange: "$$$",
+    image: makeupHero,
+    priceRange: "₹₹₹",
     openHours: "8:00 AM - 10:00 PM",
     specialties: ["Bridal Makeup", "Party Makeup", "Photography", "Special Events"],
     description: "Professional makeup artists for all occasions with celebrity-level expertise",
@@ -179,8 +183,8 @@ const allStores = [
     distance: "1.4 km",
     address: "678 Artist Avenue, City Center",
     phone: "(555) 222-3355",
-    image: salon2,
-    priceRange: "$$",
+    image: makeupHero,
+    priceRange: "₹₹",
     openHours: "9:00 AM - 9:00 PM",
     specialties: ["Event Makeup", "Creative Looks", "Professional Styling", "Fashion Shows"],
     description: "Creative makeup artistry and beauty transformations for fashion and events",
@@ -192,16 +196,20 @@ interface AllStoresProps {
   categoryFilter?: string;
   title?: string;
   description?: string;
+  defaultPriceFilter?: "all" | "₹" | "₹₹" | "₹₹₹";
+  defaultSortBy?: "rating" | "distance" | "price" | "reviews";
 }
 
-const AllStores: React.FC<AllStoresProps> = ({ 
-  categoryFilter = "all", 
+const AllStores: React.FC<AllStoresProps> = ({
+  categoryFilter = "all",
   title = "All Beauty & Grooming Stores",
-  description = "Discover the best beauty and grooming services near you"
+  description = "Discover the best beauty and grooming services near you",
+  defaultPriceFilter = "all",
+  defaultSortBy = "rating"
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("rating");
-  const [priceFilter, setPriceFilter] = useState("all");
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [priceFilter, setPriceFilter] = useState(defaultPriceFilter);
   const [categoryState, setCategoryState] = useState(categoryFilter);
   const { location } = useLocation();
 
@@ -258,7 +266,7 @@ const AllStores: React.FC<AllStoresProps> = ({
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-background to-muted/30">
+    <section className="py-12 bg-background">
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className="text-center mb-12">
@@ -277,7 +285,7 @@ const AllStores: React.FC<AllStoresProps> = ({
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-white/50 backdrop-blur-sm border border-white/20 rounded-2xl p-6 mb-8">
+        <div className="bg-white border rounded-xl p-4 mb-6">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
@@ -285,14 +293,14 @@ const AllStores: React.FC<AllStoresProps> = ({
                 placeholder="Search stores, services, or areas..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/70"
+                className="pl-10"
               />
             </div>
             
             <div className="flex flex-wrap gap-3">
               {categoryFilter === "all" && (
                 <Select value={categoryState} onValueChange={setCategoryState}>
-                  <SelectTrigger className="w-48 bg-white/70">
+                  <SelectTrigger className="w-48">
                     <Filter className="w-4 h-4 mr-2" />
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
@@ -307,7 +315,7 @@ const AllStores: React.FC<AllStoresProps> = ({
               )}
               
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40 bg-white/70">
+                <SelectTrigger className="w-40">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -319,14 +327,14 @@ const AllStores: React.FC<AllStoresProps> = ({
               </Select>
               
               <Select value={priceFilter} onValueChange={setPriceFilter}>
-                <SelectTrigger className="w-32 bg-white/70">
+                <SelectTrigger className="w-32">
                   <SelectValue placeholder="Price" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Prices</SelectItem>
-                  <SelectItem value="$">$ Budget</SelectItem>
-                  <SelectItem value="$$">$$ Moderate</SelectItem>
-                  <SelectItem value="$$$">$$$ Premium</SelectItem>
+                  <SelectItem value="₹">₹ Budget</SelectItem>
+                  <SelectItem value="₹₹">₹₹ Moderate</SelectItem>
+                  <SelectItem value="₹₹₹">₹₹₹ Premium</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -341,7 +349,7 @@ const AllStores: React.FC<AllStoresProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStores.map((store) => (
             <Link key={store.id} to={getCategoryLink(store)}>
-              <Card className="overflow-hidden hover:shadow-elegant transition-all duration-300 cursor-pointer group h-full">
+              <Card className="overflow-hidden hover:shadow-soft transition-colors duration-200 cursor-pointer group h-full border">
                 <div className="relative h-48">
                   <img 
                     src={store.image} 
