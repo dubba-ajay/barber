@@ -19,18 +19,21 @@ type PriceTier = typeof priceTiers[number]["value"];
 
 type CategoryKey = "mens-hair" | "womens-beauty" | "nail-studios" | "makeup-artists";
 
-export default function MensStoresModern({ category = "mens-hair" }: { category?: CategoryKey }) {
+type CategoryFilter = CategoryKey | "all";
+
+export default function MensStoresModern({ category = "mens-hair" }: { category?: CategoryFilter }) {
   const [query, setQuery] = useState("");
   const [price, setPrice] = useState<PriceTier>("all");
   const [sortBy, setSortBy] = useState<"rating" | "distance" | "price" | "reviews">("rating");
 
-  const stores = useMemo(() => allStores.filter(s => s.category === category), [category]);
+  const stores = useMemo(() => (category === "all" ? allStores : allStores.filter(s => s.category === category)), [category]);
 
-  const labels: Record<CategoryKey, { unit: string; placeholder: string }> = {
+  const labels: Record<CategoryFilter, { unit: string; placeholder: string }> = {
     "mens-hair": { unit: "barber", placeholder: "Search barbers, areas, or specialties" },
     "womens-beauty": { unit: "salon", placeholder: "Search salons, areas, or services" },
     "nail-studios": { unit: "studio", placeholder: "Search nail studios, areas, or services" },
     "makeup-artists": { unit: "artist", placeholder: "Search makeup artists, areas, or services" },
+    "all": { unit: "store", placeholder: "Search stores, areas, or services" },
   };
 
   const filtered = useMemo(() => {
