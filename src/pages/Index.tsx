@@ -3,8 +3,8 @@ import Footer from "@/components/layout/Footer";
 import ModernHero from "@/components/features/ModernHero";
 // removed ServiceCategories for modern layout
 import FeaturedServices from "@/components/features/FeaturedServices";
-import FeaturedStores from "@/components/features/FeaturedStores";
 import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
+import MensStoresModern from "@/components/features/MensStoresModern";
 // removed HomeAvailabilityPackages for modern layout
 
 const Index = () => {
@@ -15,7 +15,7 @@ const Index = () => {
         <ModernHero />
         <TopRatedHeroStores />
         <FeaturedServices />
-        <FeaturedStores />
+        <MensStoresModern category="all" />
       </main>
       <Footer />
     </div>
