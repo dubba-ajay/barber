@@ -28,6 +28,7 @@ function useLocalStorage<T>(key: string, initial: T) {
 }
 
 const FreelancerDashboard = () => {
+  const { signOut } = useAuth();
   const {
     role, setRole,
     openJobs, myJobs, earnings,
