@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabase, hasSupabaseEnv } from "@/lib/supabase";
 
 export type AppRole = "freelancer" | "owner" | "customer";
 
@@ -25,6 +25,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!hasSupabaseEnv) {
+      setLoading(false);
+      return;
+    }
+    const supabase = getSupabase();
     const init = async () => {
       const { data } = await supabase.auth.getSession();
       setUser(data.session?.user ?? null);
@@ -43,14 +48,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   const signIn: AuthState["signIn"] = async (email, password) => {
+    const supabase = getSupabase();
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
   };
   const signUp: AuthState["signUp"] = async (email, password, role) => {
+    const supabase = getSupabase();
     const { error } = await supabase.auth.signUp({ email, password, options: { data: { role } } });
     if (error) throw error;
   };
   const signOut: AuthState["signOut"] = async () => {
+    if (!hasSupabaseEnv) return;
+    const supabase = getSupabase();
     await supabase.auth.signOut();
   };
 
