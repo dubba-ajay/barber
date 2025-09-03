@@ -34,7 +34,7 @@ const ServiceDetail = () => {
   const { id } = useParams();
   const service = servicesCatalog[Number(id || 0)];
 
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>();
 
   return (
@@ -71,9 +71,15 @@ const ServiceDetail = () => {
                       mode="single"
                       selected={selectedDate}
                       onSelect={setSelectedDate}
-                      disabled={(date) => date < new Date() || date < new Date(Date.now() - 86400000)}
+                      disabled={(date) => {
+                        const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        const today = new Date();
+                        const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                        return d < t;
+                      }}
                       className="rounded-md border"
                     />
+                    <div className="flex justify-end"><Button size="sm" variant="outline" onClick={() => setSelectedDate(new Date())}>Today</Button></div>
                     {selectedDate && (
                       <div className="grid grid-cols-3 gap-2">
                         {timeSlots.map((t) => (
