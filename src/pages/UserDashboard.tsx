@@ -45,6 +45,8 @@ const UserDashboard = () => {
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList>
             <TabsTrigger value="bookings">Bookings</TabsTrigger>
+            <TabsTrigger value="payments">Payment Methods</TabsTrigger>
+            <TabsTrigger value="notifications">Notifications</TabsTrigger>
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="help">Help Center</TabsTrigger>
           </TabsList>
@@ -86,6 +88,62 @@ const UserDashboard = () => {
                     ))}
                   </TableBody>
                 </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="payments">
+            <Card>
+              <CardHeader><CardTitle>Payment Methods</CardTitle></CardHeader>
+              <CardContent className="grid gap-4 md:max-w-lg">
+                <div className="grid gap-2">
+                  <Label>UPI ID</Label>
+                  <Input placeholder="name@bank" />
+                </div>
+                <div className="grid gap-2">
+                  <Label>Card number</Label>
+                  <Input placeholder="1234 5678 9012 3456" />
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="grid gap-2">
+                    <Label>Expiry</Label>
+                    <Input placeholder="MM/YY" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>CVV</Label>
+                    <Input placeholder="123" />
+                  </div>
+                </div>
+                <Button className="w-full">Save payment method</Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="notifications">
+            <Card>
+              <CardHeader><CardTitle>Notifications</CardTitle></CardHeader>
+              <CardContent className="space-y-4 md:max-w-lg">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium">Booking reminders</div>
+                    <div className="text-sm text-muted-foreground">Get reminders before your appointment</div>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium">Promotions</div>
+                    <div className="text-sm text-muted-foreground">Exclusive offers and discounts</div>
+                  </div>
+                  <Switch />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="font-medium">Payment receipts</div>
+                    <div className="text-sm text-muted-foreground">Email receipts after payment</div>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
