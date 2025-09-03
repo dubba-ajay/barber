@@ -28,7 +28,7 @@ const Header = () => {
             <span className="text-xl font-bold tracking-tight">BeautySalon</span>
           </Link>
 
-          <nav className="hidden xl:flex items-center space-x-6">
+          <nav className="hidden 2xl:flex items-center space-x-6">
             {(role !== "owner" ? navItems : []).map((item) => (
               <Link
                 key={item.name}
