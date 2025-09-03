@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ServicesHeroSlider from "@/components/features/ServicesHeroSlider";
+import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 // removed ServiceCategories for modern layout
 import FeaturedServices from "@/components/features/FeaturedServices";
 import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
@@ -12,7 +12,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="pt-16 space-y-16">
-        <ServicesHeroSlider />
+        <CategoryHeroSlider category="mens-hair" showTabs={true} />
         <TopRatedHeroStores />
         <FeaturedServices />
         <MensStoresModern category="all" />
