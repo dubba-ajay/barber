@@ -49,10 +49,8 @@ export default function ServicesHeroSlider() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="mt-4 flex items-center justify-end gap-2">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
+            <CarouselPrevious />
+            <CarouselNext />
           </Carousel>
         </div>
       </div>
