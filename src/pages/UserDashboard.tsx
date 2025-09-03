@@ -72,16 +72,15 @@ const UserDashboard = () => {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sampleBookings.map(b => (
+                    {bookings.map(b => (
                       <TableRow key={b.id}>
-                        <TableCell>{b.store}</TableCell>
-                        <TableCell>{b.service}</TableCell>
-                        <TableCell>{format(b.date)}</TableCell>
+                        <TableCell>{b.salonName}</TableCell>
+                        <TableCell>{b.services.join(", ")}</TableCell>
+                        <TableCell>{format(new Date(b.date))}</TableCell>
                         <TableCell>{b.time}</TableCell>
-                        <TableCell>₹{b.price}</TableCell>
+                        <TableCell>—</TableCell>
                         <TableCell className="text-right space-x-2">
-                          <Button size="sm" variant="outline">Reschedule</Button>
-                          <Button size="sm" variant="destructive">Cancel</Button>
+                          <Button size="sm" variant="destructive" onClick={async ()=>{ await cancelSlot(b.id); refresh(); }}>Cancel</Button>
                         </TableCell>
                       </TableRow>
                     ))}
