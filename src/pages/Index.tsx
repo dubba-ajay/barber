@@ -4,9 +4,21 @@ import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 // removed ServiceCategories for modern layout
 import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
 import MensStoresModern from "@/components/features/MensStoresModern";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // removed HomeAvailabilityPackages for modern layout
 
 const Index = () => {
+  const { role } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (role === "owner") {
+      navigate("/store-owner-dashboard", { replace: true });
+    }
+  }, [role, navigate]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
