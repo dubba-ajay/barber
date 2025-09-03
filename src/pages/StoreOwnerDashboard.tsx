@@ -2,58 +2,56 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useMarketplace } from "@/contexts/MarketplaceContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 const StoreOwnerDashboard = () => {
-  const { role, setRole, ownerStoreId, jobs, bookings, todaysRevenue, bookingsToday, postJob } = useMarketplace();
-  const myOpen = jobs.filter(j => j.storeId === ownerStoreId && j.status === "open");
+  const { role, setRole, ownerStoreId, jobs, bookings, earnings } = useMarketplace();
 
-  const [title, setTitle] = useState("Hair Stylist");
-  const [hours, setHours] = useState(4);
-  const [rate, setRate] = useState(300);
-  const [startTime, setStartTime] = useState("12:00");
-  const [homeService, setHomeService] = useState(false);
+  const today = new Date().toISOString().slice(0,10);
+
+  const revenueToday = useMemo(() => bookings.filter(b => b.storeId === ownerStoreId && b.date === today).reduce((s,b)=>s+b.price,0), [bookings, ownerStoreId, today]);
+  const bookingsCountToday = useMemo(() => bookings.filter(b => b.storeId === ownerStoreId && b.date === today).length, [bookings, ownerStoreId, today]);
+
+  const costToday = useMemo(() => {
+    return earnings
+      .filter(e => e.date === today)
+      .filter(e => {
+        const job = jobs.find(j => j.id === e.jobId);
+        return job && job.storeId === ownerStoreId;
+      })
+      .reduce((s,e)=>s+e.amount,0);
+  }, [earnings, jobs, ownerStoreId, today]);
+
+  const profitToday = Math.max(0, revenueToday - costToday);
 
   const last7 = useMemo(() => {
-    const days: { date: string; revenue: number; bookings: number }[] = [];
+    const days: { date: string; revenue: number }[] = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
       const key = d.toISOString().slice(0,10);
-      const revenue = bookings.filter(b => b.date === key).reduce((s, b) => s + b.price, 0);
-      const count = bookings.filter(b => b.date === key).length;
-      days.push({ date: key.slice(5), revenue, bookings: count });
+      const revenue = bookings.filter(b => b.storeId === ownerStoreId && b.date === key).reduce((s, b) => s + b.price, 0);
+      days.push({ date: key.slice(5), revenue });
     }
     return days;
-  }, [bookings]);
+  }, [bookings, ownerStoreId]);
 
-  const createShift = () => {
-    postJob({
-      storeId: ownerStoreId,
-      storeName: "Elite Men's Grooming",
-      title,
-      location: "Connaught Place",
-      date: new Date().toISOString().slice(0,10),
-      startTime,
-      hours,
-      rate,
-      homeService,
-      freelancerId: undefined,
-    });
-    setTitle("Hair Stylist");
-    setHours(4);
-    setRate(300);
-    setStartTime("12:00");
-    setHomeService(false);
-  };
+  const completedToday = useMemo(() => jobs.filter(j => j.storeId === ownerStoreId && j.date === today && (j.status === "completed" || j.status === "paid")), [jobs, ownerStoreId, today]);
+
+  const workerBreakdown = useMemo(() => {
+    const map: Record<string, { completed: number; home: number; insalon: number }> = {};
+    for (const j of completedToday) {
+      const key = j.freelancerId || "unassigned";
+      if (!map[key]) map[key] = { completed: 0, home: 0, insalon: 0 };
+      map[key].completed += 1;
+      if (j.homeService) map[key].home += 1; else map[key].insalon += 1;
+    }
+    return map;
+  }, [completedToday]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -70,19 +68,19 @@ const StoreOwnerDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Today's Revenue</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold">₹{todaysRevenue.toLocaleString()}</CardContent>
+            <CardContent className="text-2xl font-bold">₹{revenueToday.toLocaleString()}</CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Today's Profit</CardTitle></CardHeader>
+            <CardContent className="text-2xl font-bold">₹{profitToday.toLocaleString()}</CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Bookings Today</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold">{bookingsToday}</CardContent>
+            <CardContent className="text-2xl font-bold">{bookingsCountToday}</CardContent>
           </Card>
           <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Open Shifts</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold">{myOpen.length}</CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Store</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold">Elite Men's Grooming</CardContent>
+            <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">Workers Active</CardTitle></CardHeader>
+            <CardContent className="text-2xl font-bold">{Object.keys(workerBreakdown).filter(k=>k!=="unassigned").length}</CardContent>
           </Card>
         </div>
 
@@ -103,58 +101,41 @@ const StoreOwnerDashboard = () => {
           </Card>
 
           <Card>
-            <CardHeader><CardTitle>Post a shift</CardTitle></CardHeader>
-            <CardContent className="space-y-3">
-              <div>
-                <Label className="text-sm">Role</Label>
-                <Input value={title} onChange={e=>setTitle(e.target.value)} />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
+            <CardHeader><CardTitle>Today: In‑salon vs Home</CardTitle></CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
-                  <Label>Hours</Label>
-                  <Input type="number" min={1} value={hours} onChange={e=>setHours(parseInt(e.target.value||"0"))} />
+                  <div className="text-sm text-muted-foreground">In‑salon</div>
+                  <div className="text-2xl font-bold">{Object.values(workerBreakdown).reduce((s,x)=>s+x.insalon,0)}</div>
                 </div>
                 <div>
-                  <Label>Rate (₹/h)</Label>
-                  <Input type="number" min={100} value={rate} onChange={e=>setRate(parseInt(e.target.value||"0"))} />
+                  <div className="text-sm text-muted-foreground">Home</div>
+                  <div className="text-2xl font-bold">{Object.values(workerBreakdown).reduce((s,x)=>s+x.home,0)}</div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label>Start time</Label>
-                  <Input value={startTime} onChange={e=>setStartTime(e.target.value)} />
-                </div>
-                <div className="flex items-center gap-2 pt-6">
-                  <Switch checked={homeService} onCheckedChange={setHomeService} />
-                  <Label>Home service</Label>
-                </div>
-              </div>
-              <Button className="w-full" onClick={createShift}>Create Shift</Button>
             </CardContent>
           </Card>
         </div>
 
         <Card>
-          <CardHeader><CardTitle>Open shifts</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Today's services by worker</CardTitle></CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Role</TableHead>
-                  <TableHead>When</TableHead>
-                  <TableHead>Hours</TableHead>
-                  <TableHead>Rate</TableHead>
-                  <TableHead>Type</TableHead>
+                  <TableHead>Worker</TableHead>
+                  <TableHead className="text-right">Completed</TableHead>
+                  <TableHead className="text-right">In‑salon</TableHead>
+                  <TableHead className="text-right">Home</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {myOpen.map(j => (
-                  <TableRow key={j.id}>
-                    <TableCell>{j.title}</TableCell>
-                    <TableCell>{j.date} • {j.startTime}</TableCell>
-                    <TableCell>{j.hours}h</TableCell>
-                    <TableCell>₹{j.rate}/h</TableCell>
-                    <TableCell>{j.homeService ? <Badge>Home Service</Badge> : <Badge variant="secondary">In-Store</Badge>}</TableCell>
+                {Object.entries(workerBreakdown).map(([id, stats]) => (
+                  <TableRow key={id}>
+                    <TableCell>{id === "unassigned" ? <Badge variant="secondary">Unassigned</Badge> : `Freelancer ${id.slice(-4)}`}</TableCell>
+                    <TableCell className="text-right">{stats.completed}</TableCell>
+                    <TableCell className="text-right">{stats.insalon}</TableCell>
+                    <TableCell className="text-right">{stats.home}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
