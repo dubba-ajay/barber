@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,7 @@ import { toast } from "sonner";
 
 export default function AuthDialog({ open, onOpenChange, mode = "login" as "login" | "signup" }) {
   const { signIn, signUp } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<AppRole>("customer");
@@ -16,10 +18,25 @@ export default function AuthDialog({ open, onOpenChange, mode = "login" as "logi
   const [loading, setLoading] = useState(false);
 
   const onLogin = async () => {
-    try { setLoading(true); await signIn(email, password); toast("Logged in"); onOpenChange(false); } catch (e:any) { toast.error(e.message); } finally { setLoading(false); }
+    try {
+      setLoading(true);
+      await signIn(email, password);
+      toast("Logged in");
+      onOpenChange(false);
+      // naive redirect: user chooses destination manually via menu; default to user dashboard
+      navigate("/user-dashboard");
+    } catch (e:any) { toast.error(e.message); } finally { setLoading(false); }
   };
   const onSignup = async () => {
-    try { setLoading(true); await signUp(email, password, role); toast("Account created. Check email if confirmation required."); onOpenChange(false); } catch (e:any) { toast.error(e.message); } finally { setLoading(false); }
+    try {
+      setLoading(true);
+      await signUp(email, password, role);
+      toast("Account created. Check email if confirmation required.");
+      onOpenChange(false);
+      if (role === "freelancer") navigate("/freelancer-dashboard");
+      else if (role === "owner") navigate("/store-owner-dashboard");
+      else navigate("/user-dashboard");
+    } catch (e:any) { toast.error(e.message); } finally { setLoading(false); }
   };
 
   return (
