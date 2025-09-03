@@ -69,7 +69,12 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+            <div className="p-2 space-y-2">
+              <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+              <div className="flex justify-end">
+                <Button size="sm" variant="outline" onClick={() => setDate(new Date())}>Today</Button>
+              </div>
+            </div>
           </PopoverContent>
         </Popover>
 
