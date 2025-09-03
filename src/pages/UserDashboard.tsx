@@ -11,11 +11,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import { useMemo, useState } from "react";
 
-const sampleBookings = [
-  { id: "b1", store: "Elite Men's Grooming", service: "Haircut", date: new Date(), time: "11:30", price: 499, status: "upcoming" as const },
-  { id: "b2", store: "Glamour Hair & Beauty", service: "Facial", date: new Date(Date.now()+86400000), time: "15:00", price: 899, status: "upcoming" as const },
-  { id: "b3", store: "Nail Couture", service: "Gel Manicure", date: new Date(Date.now()-86400000*2), time: "13:00", price: 699, status: "past" as const },
-];
+import { getMyBookings, cancelSlot, BookingRecord } from "@/lib/availability";
 
 function format(d: Date) {
   return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
@@ -24,11 +20,14 @@ function format(d: Date) {
 const UserDashboard = () => {
   const { user, role } = useAuth();
   const [tab, setTab] = useState("bookings");
+  const [bookings, setBookings] = useState<BookingRecord[]>(getMyBookings());
+
+  const refresh = () => setBookings(getMyBookings());
 
   const today = new Date();
-  const todays = useMemo(() => sampleBookings.filter(b => b.date.toDateString() === today.toDateString()), []);
-  const upcoming = useMemo(() => sampleBookings.filter(b => b.date >= today), []);
-  const past = useMemo(() => sampleBookings.filter(b => b.date < today), []);
+  const todays = useMemo(() => bookings.filter(b => new Date(b.date).toDateString() === today.toDateString()), [bookings]);
+  const upcoming = useMemo(() => bookings.filter(b => new Date(b.date) >= today), [bookings]);
+  const past = useMemo(() => bookings.filter(b => new Date(b.date) < today), [bookings]);
 
   return (
     <div className="min-h-screen flex flex-col">
