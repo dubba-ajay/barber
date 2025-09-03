@@ -28,7 +28,7 @@ const Header = () => {
             <span className="text-xl font-bold tracking-tight">BeautySalon</span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6">
             {(role !== "owner" ? navItems : []).map((item) => (
               <Link
                 key={item.name}
@@ -86,16 +86,6 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t">
             <nav className="py-4 space-y-2">
-              {(role !== "owner" ? navItems : []).map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block px-4 py-2 text-foreground/80 hover:text-foreground hover:bg-muted/50"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
               <div className="px-4 pt-2 flex items-center gap-2">
                 {!user ? (
                   <Button variant="ghost" size="sm" className="flex-1 justify-start" onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}>
