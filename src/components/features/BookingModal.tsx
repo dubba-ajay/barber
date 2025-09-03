@@ -59,7 +59,7 @@ const writeBooked = (salonId: number, dateStr: string, slots: string[]) => {
 };
 
 const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModalProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedLocation, setSelectedLocation] = useState<"salon" | "home">("salon");
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
@@ -243,9 +243,17 @@ const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModa
                   mode="single"
                   selected={selectedDate}
                   onSelect={handleDateSelect}
-                  disabled={(date) => date < new Date() || date < new Date(Date.now() - 86400000)}
+                  disabled={(date) => {
+                    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                    const today = new Date();
+                    const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    return d < t; // only disable before today
+                  }}
                   className="rounded-md border"
                 />
+                <div className="flex justify-end mt-2">
+                  <Button size="sm" variant="outline" onClick={() => handleDateSelect(new Date())}>Today</Button>
+                </div>
               </CardContent>
             </Card>
 
