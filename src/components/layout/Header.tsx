@@ -55,17 +55,17 @@ const Header = () => {
                   <Button variant="outline" size="sm"><User className="w-4 h-4 mr-2" /> Account</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link to="/user-dashboard">User Dashboard</Link>
-                  </DropdownMenuItem>
-                  {role === "freelancer" && (
+                  {role === "owner" ? (
+                    <DropdownMenuItem asChild>
+                      <Link to="/store-owner-dashboard">Store Owner Dashboard</Link>
+                    </DropdownMenuItem>
+                  ) : role === "freelancer" ? (
                     <DropdownMenuItem asChild>
                       <Link to="/freelancer-dashboard">Freelancer Dashboard</Link>
                     </DropdownMenuItem>
-                  )}
-                  {role === "owner" && (
+                  ) : (
                     <DropdownMenuItem asChild>
-                      <Link to="/store-owner-dashboard">Store Owner Dashboard</Link>
+                      <Link to="/user-dashboard">User Dashboard</Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
@@ -103,14 +103,12 @@ const Header = () => {
                   </Button>
                 ) : (
                   <>
-                    <Link to="/user-dashboard" className="flex-1">
-                      <Button variant="ghost" size="sm" className="w-full justify-start">User Dashboard</Button>
-                    </Link>
-                    {role === "freelancer" && (
-                      <Link to="/freelancer-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Freelancer</Button></Link>
-                    )}
-                    {role === "owner" && (
-                      <Link to="/store-owner-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Owner</Button></Link>
+                    {role === "owner" ? (
+                      <Link to="/store-owner-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Owner Dashboard</Button></Link>
+                    ) : role === "freelancer" ? (
+                      <Link to="/freelancer-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Freelancer Dashboard</Button></Link>
+                    ) : (
+                      <Link to="/user-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">User Dashboard</Button></Link>
                     )}
                     <Button size="sm" className="flex-1" onClick={() => signOut()}>Sign out</Button>
                   </>
