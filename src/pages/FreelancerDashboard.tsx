@@ -18,6 +18,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
+import { getSupabase, hasSupabaseEnv } from "@/lib/supabase";
 
 function useLocalStorage<T>(key: string, initial: T) {
   const [val, setVal] = useState<T>(() => {
