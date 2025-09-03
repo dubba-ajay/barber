@@ -1,6 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ModernHero from "@/components/features/ModernHero";
+import ServicesHeroSlider from "@/components/features/ServicesHeroSlider";
 // removed ServiceCategories for modern layout
 import FeaturedServices from "@/components/features/FeaturedServices";
 import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
