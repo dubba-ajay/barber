@@ -231,7 +231,7 @@ const UserDashboard = () => {
                 <CardContent className="space-y-4">
                   <div className="text-3xl font-bold">₹{walletBalance.toLocaleString('en-IN')}</div>
                   <div className="flex gap-2">
-                    <Button onClick={() => addMoney(100)}>Add ��100</Button>
+                    <Button onClick={() => addMoney(100)}>Add ₹100</Button>
                     <Button variant="outline" onClick={() => addMoney(500)}>Add ₹500</Button>
                   </div>
                   <div className="grid gap-2">
@@ -446,6 +446,9 @@ const UserDashboard = () => {
                   <div className="flex items-center gap-3">
                     <Button variant="outline" onClick={() => signOut()}>Logout</Button>
                     <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive">Delete Account</Button>
+                      </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Delete account?</AlertDialogTitle>
@@ -460,7 +463,6 @@ const UserDashboard = () => {
                           }}>Delete</AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
-                      <Button variant="destructive">Delete Account</Button>
                     </AlertDialog>
                   </div>
                 </CardContent>
