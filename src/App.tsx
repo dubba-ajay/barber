@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LocationProvider } from "@/contexts/LocationContext";
+import { MarketplaceProvider } from "@/contexts/MarketplaceContext";
 import Index from "./pages/Index";
 import MensHair from "./pages/MensHair";
 import WomensBeauty from "./pages/WomensBeauty";
@@ -24,9 +25,10 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LocationProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+        <MarketplaceProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/mens-hair" element={<MensHair />} />
@@ -47,6 +49,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </MarketplaceProvider>
       </LocationProvider>
     </TooltipProvider>
   </QueryClientProvider>
