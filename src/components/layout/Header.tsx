@@ -29,7 +29,7 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {(role !== "owner" ? navItems : []).map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
@@ -86,7 +86,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t">
             <nav className="py-4 space-y-2">
-              {navItems.map((item) => (
+              {(role !== "owner" ? navItems : []).map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
