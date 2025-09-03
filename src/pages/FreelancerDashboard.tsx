@@ -352,7 +352,7 @@ const FreelancerDashboard = () => {
                     </Select>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline">Logout</Button>
+                    <Button variant="outline" onClick={() => signOut()}>Logout</Button>
                     <Button variant="destructive" onClick={()=> setReportOpen(true)}>Report Problem</Button>
                   </div>
                 </CardContent>
