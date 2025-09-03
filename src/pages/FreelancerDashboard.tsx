@@ -352,6 +352,27 @@ const FreelancerDashboard = () => {
                       </SelectContent>
                     </Select>
                   </div>
+                  <div className="grid gap-2">
+                    <Label>Change Password</Label>
+                    <div className="flex gap-2">
+                      <Input type="password" placeholder="New password" id="freelancer-newpass" />
+                      <Button onClick={async ()=>{
+                        const el = document.getElementById('freelancer-newpass') as HTMLInputElement | null;
+                        const pw = el?.value || '';
+                        if (!pw) return;
+                        if (!hasSupabaseEnv) { alert('Connect Supabase to enable password change'); return; }
+                        try {
+                          const supabase = getSupabase();
+                          const { error } = await supabase.auth.updateUser({ password: pw });
+                          if (error) throw error;
+                          alert('Password updated');
+                          if (el) el.value='';
+                        } catch (e:any) {
+                          alert(e.message || 'Failed to update password');
+                        }
+                      }}>Update</Button>
+                    </div>
+                  </div>
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => signOut()}>Logout</Button>
                     <Button variant="destructive" onClick={()=> setReportOpen(true)}>Report Problem</Button>
