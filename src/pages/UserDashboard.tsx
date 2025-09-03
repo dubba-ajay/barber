@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Calendar } from "@/components/ui/calendar";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { getSupabase, hasSupabaseEnv } from "@/lib/supabase";
 import { useEffect, useMemo, useState } from "react";
@@ -231,7 +231,7 @@ const UserDashboard = () => {
                 <CardContent className="space-y-4">
                   <div className="text-3xl font-bold">₹{walletBalance.toLocaleString('en-IN')}</div>
                   <div className="flex gap-2">
-                    <Button onClick={() => addMoney(100)}>Add ₹100</Button>
+                    <Button onClick={() => addMoney(100)}>Add ��100</Button>
                     <Button variant="outline" onClick={() => addMoney(500)}>Add ₹500</Button>
                   </div>
                   <div className="grid gap-2">
