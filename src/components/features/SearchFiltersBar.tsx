@@ -32,7 +32,8 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
     const route = serviceToRoute[service] || "/";
     const params = new URLSearchParams();
     if (city) params.set("city", city);
-    if (date) params.set("date", date.toISOString().slice(0,10));
+    const formatLocal = (d: Date) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if (date) params.set("date", formatLocal(date));
     if (time && time !== "any") params.set("time", time);
     if (price && price !== "all") params.set("price", price);
     params.set("service", service);
@@ -68,7 +69,12 @@ export default function SearchFiltersBar({ compact = false }: { compact?: boolea
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+            <div className="p-2 space-y-2">
+              <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+              <div className="flex justify-end">
+                <Button size="sm" variant="outline" onClick={() => setDate(new Date())}>Today</Button>
+              </div>
+            </div>
           </PopoverContent>
         </Popover>
 

@@ -2,9 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Calendar, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AuthDialog from "@/components/auth/AuthDialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, role, signOut } = useAuth();
+  const [authOpen, setAuthOpen] = useState(false);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -24,7 +29,7 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {(role !== "owner" ? navItems : []).map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
@@ -36,13 +41,37 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="text-sm">
-              <User className="w-4 h-4 mr-2" />
-              Login
-            </Button>
-            <Button size="sm" className="text-sm">
-              Sign Up
-            </Button>
+            {!user ? (
+              <>
+                <Button variant="ghost" size="sm" className="text-sm" onClick={() => setAuthOpen(true)}>
+                  <User className="w-4 h-4 mr-2" />
+                  Login / Sign Up
+                </Button>
+                <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
+              </>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm"><User className="w-4 h-4 mr-2" /> Account</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {role === "owner" ? (
+                    <DropdownMenuItem asChild>
+                      <Link to="/store-owner-dashboard">Store Owner Dashboard</Link>
+                    </DropdownMenuItem>
+                  ) : role === "freelancer" ? (
+                    <DropdownMenuItem asChild>
+                      <Link to="/freelancer-dashboard">Freelancer Dashboard</Link>
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem asChild>
+                      <Link to="/user-dashboard">User Dashboard</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
 
           <button
@@ -57,7 +86,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden border-t">
             <nav className="py-4 space-y-2">
-              {navItems.map((item) => (
+              {(role !== "owner" ? navItems : []).map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
@@ -68,11 +97,24 @@ const Header = () => {
                 </Link>
               ))}
               <div className="px-4 pt-2 flex items-center gap-2">
-                <Button variant="ghost" size="sm" className="flex-1 justify-start">
-                  <User className="w-4 h-4 mr-2" /> Login
-                </Button>
-                <Button size="sm" className="flex-1">Sign Up</Button>
+                {!user ? (
+                  <Button variant="ghost" size="sm" className="flex-1 justify-start" onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}>
+                    <User className="w-4 h-4 mr-2" /> Login / Sign Up
+                  </Button>
+                ) : (
+                  <>
+                    {role === "owner" ? (
+                      <Link to="/store-owner-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Owner Dashboard</Button></Link>
+                    ) : role === "freelancer" ? (
+                      <Link to="/freelancer-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">Freelancer Dashboard</Button></Link>
+                    ) : (
+                      <Link to="/user-dashboard" className="flex-1"><Button variant="ghost" size="sm" className="w-full justify-start">User Dashboard</Button></Link>
+                    )}
+                    <Button size="sm" className="flex-1" onClick={() => signOut()}>Sign out</Button>
+                  </>
+                )}
               </div>
+              <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
             </nav>
           </div>
         )}

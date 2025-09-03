@@ -44,22 +44,10 @@ const getAvailability = (date: Date) => {
   return availableSlots;
 };
 
-// Local booking store to hide booked slots across tabs in the same browser
-const bookingKey = (salonId: number, dateStr: string) => `bookings:${salonId}:${dateStr}`;
-const readBooked = (salonId: number, dateStr: string): string[] => {
-  try {
-    const raw = localStorage.getItem(bookingKey(salonId, dateStr));
-    return raw ? (JSON.parse(raw) as string[]) : [];
-  } catch {
-    return [];
-  }
-};
-const writeBooked = (salonId: number, dateStr: string, slots: string[]) => {
-  localStorage.setItem(bookingKey(salonId, dateStr), JSON.stringify(Array.from(new Set(slots))));
-};
+import { listBookedSlots, bookSlot } from "@/lib/availability";
 
 const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModalProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedLocation, setSelectedLocation] = useState<"salon" | "home">("salon");
   const [availableSlots, setAvailableSlots] = useState<string[]>([]);
@@ -71,16 +59,13 @@ const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModa
   }, [service?.id]);
 
   useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (!dateKey) return;
-      if (e.key === bookingKey(salon.id, dateKey)) {
-        const base = selectedDate ? getAvailability(selectedDate) : [];
-        const booked = readBooked(salon.id, dateKey);
-        setAvailableSlots(base.filter((t) => !booked.includes(t)));
-      }
+    const refresh = async () => {
+      if (!selectedDate) return;
+      const base = getAvailability(selectedDate);
+      const booked = await listBookedSlots(salon.id, selectedDate.toISOString().slice(0,10));
+      setAvailableSlots(base.filter((t) => !booked.includes(t)));
     };
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
+    refresh();
   }, [dateKey, salon.id, selectedDate]);
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -89,8 +74,9 @@ const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModa
     if (date) {
       const base = getAvailability(date);
       const key = date.toISOString().slice(0, 10);
-      const booked = readBooked(salon.id, key);
-      setAvailableSlots(base.filter((t) => !booked.includes(t)));
+      listBookedSlots(salon.id, key).then((booked) => {
+        setAvailableSlots(base.filter((t) => !booked.includes(t)));
+      });
     }
   };
 
@@ -98,17 +84,22 @@ const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModa
     const selected = services.filter(s => selectedServiceIds.includes(s.id));
     if (selectedDate && selectedTime && selected.length > 0) {
       const key = selectedDate.toISOString().slice(0, 10);
-      const booked = readBooked(salon.id, key);
-      if (!booked.includes(selectedTime)) {
-        writeBooked(salon.id, key, [...booked, selectedTime]);
-      }
-      const names = selected.map(s => s.name).join(", ");
+      const names = selected.map(s => s.name);
       const parsePrice = (p: string) => parseInt(p.replace(/[^\d]/g, "")) || 0;
       const baseTotal = selected.reduce((sum, s) => sum + parsePrice(s.price), 0);
       const total = baseTotal + (selectedLocation === "home" ? 100 : 0);
-      alert(`Booking confirmed!\n\nServices: ${names}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nTotal: ₹${total.toLocaleString('en-IN')}`);
-      setAvailableSlots((prev) => prev.filter((t) => t !== selectedTime));
-      onClose();
+      bookSlot({
+        salonId: salon.id,
+        salonName: salon.name,
+        date: key,
+        time: selectedTime,
+        location: selectedLocation,
+        services: names,
+      }).then(() => {
+        alert(`Booking confirmed!\n\nServices: ${names.join(', ')}\nSalon: ${salon.name}\nDate: ${selectedDate.toDateString()}\nTime: ${selectedTime}\nLocation: ${selectedLocation === "salon" ? "At Salon" : "Home Visit"}\nTotal: ₹${total.toLocaleString('en-IN')}`);
+        setAvailableSlots((prev) => prev.filter((t) => t !== selectedTime));
+        onClose();
+      });
     }
   };
 
@@ -243,9 +234,17 @@ const BookingModal = ({ service, services, salon, isOpen, onClose }: BookingModa
                   mode="single"
                   selected={selectedDate}
                   onSelect={handleDateSelect}
-                  disabled={(date) => date < new Date() || date < new Date(Date.now() - 86400000)}
+                  disabled={(date) => {
+                    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                    const today = new Date();
+                    const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    return d < t; // only disable before today
+                  }}
                   className="rounded-md border"
                 />
+                <div className="flex justify-end mt-2">
+                  <Button size="sm" variant="outline" onClick={() => handleDateSelect(new Date())}>Today</Button>
+                </div>
               </CardContent>
             </Card>
 

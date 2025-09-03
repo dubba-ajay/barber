@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LocationProvider } from "@/contexts/LocationContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { RequireAuth, RequireRole } from "@/components/auth/RequireAuth";
+import { MarketplaceProvider } from "@/contexts/MarketplaceContext";
 import Index from "./pages/Index";
 import MensHair from "./pages/MensHair";
 import WomensBeauty from "./pages/WomensBeauty";
@@ -24,9 +27,11 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <LocationProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+        <AuthProvider>
+          <MarketplaceProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/mens-hair" element={<MensHair />} />
@@ -39,14 +44,16 @@ const App = () => (
             <Route path="/makeup-artists/salon/:id" element={<SalonDetail />} />
             <Route path="/all-stores" element={<AllStoresPage />} />
             <Route path="/service/:id" element={<ServiceDetail />} />
-            <Route path="/user-dashboard" element={<UserDashboard />} />
-            <Route path="/store-owner-dashboard" element={<StoreOwnerDashboard />} />
-            <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
-            <Route path="/worker-dashboard" element={<WorkerDashboard />} />
+            <Route path="/user-dashboard" element={<RequireAuth><UserDashboard /></RequireAuth>} />
+            <Route path="/store-owner-dashboard" element={<RequireRole role="owner"><StoreOwnerDashboard /></RequireRole>} />
+            <Route path="/freelancer-dashboard" element={<RequireRole role="freelancer"><FreelancerDashboard /></RequireRole>} />
+            <Route path="/worker-dashboard" element={<RequireAuth><WorkerDashboard /></RequireAuth>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+            </MarketplaceProvider>
+          </AuthProvider>
       </LocationProvider>
     </TooltipProvider>
   </QueryClientProvider>
