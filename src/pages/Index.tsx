@@ -2,7 +2,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CategoryHeroSlider from "@/components/features/CategoryHeroSlider";
 // removed ServiceCategories for modern layout
-import FeaturedServices from "@/components/features/FeaturedServices";
 import TopRatedHeroStores from "@/components/features/TopRatedHeroStores";
 import MensStoresModern from "@/components/features/MensStoresModern";
 // removed HomeAvailabilityPackages for modern layout
@@ -14,7 +13,6 @@ const Index = () => {
       <main className="pt-16 space-y-16">
         <CategoryHeroSlider category="mens-hair" showTabs={true} />
         <TopRatedHeroStores />
-        <FeaturedServices />
         <MensStoresModern category="all" />
       </main>
       <Footer />
