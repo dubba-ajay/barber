@@ -119,7 +119,7 @@ const StoreOwnerDashboard = () => {
         </div>
 
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
+          <TabsList className="flex gap-2 bg-transparent p-0 overflow-x-auto whitespace-nowrap -mx-4 px-4">
             <TabsTrigger value="overview" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Overview</TabsTrigger>
             <TabsTrigger value="profile" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Store Profile</TabsTrigger>
             <TabsTrigger value="services" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Services & Pricing</TabsTrigger>
@@ -186,7 +186,7 @@ const StoreOwnerDashboard = () => {
           <TabsContent value="services">
             <Card>
               <CardHeader><CardTitle>Services & Pricing</CardTitle></CardHeader>
-              <CardContent>
+              <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -239,7 +239,7 @@ const StoreOwnerDashboard = () => {
             </div>
             <Card className="mt-3">
               <CardHeader><CardTitle>Team</CardTitle></CardHeader>
-              <CardContent>
+              <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -272,7 +272,7 @@ const StoreOwnerDashboard = () => {
           <TabsContent value="bookings">
             <Card>
               <CardHeader><CardTitle>Bookings Management</CardTitle></CardHeader>
-              <CardContent>
+              <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -327,7 +327,7 @@ const StoreOwnerDashboard = () => {
             </div>
             <Card className="mt-3">
               <CardHeader><CardTitle>Active & Scheduled</CardTitle></CardHeader>
-              <CardContent>
+              <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -360,7 +360,7 @@ const StoreOwnerDashboard = () => {
           <TabsContent value="reviews">
             <Card>
               <CardHeader><CardTitle>Reviews & Ratings</CardTitle></CardHeader>
-              <CardContent>
+              <CardContent className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -389,7 +389,7 @@ const StoreOwnerDashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <Card>
                 <CardHeader><CardTitle>Store Holidays</CardTitle></CardHeader>
-                <CardContent>
+                <CardContent className="overflow-x-auto">
                   <div className="flex gap-2 items-end">
                     <div className="grid gap-1 w-full md:max-w-xs">
                       <Label>Add Holiday</Label>
