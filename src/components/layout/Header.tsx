@@ -24,6 +24,8 @@ const Header = () => {
     { name: "Contact", href: "/contact" },
   ];
 
+  const dashboardPath = role === "owner" ? "/store-owner-dashboard" : role === "freelancer" ? "/freelancer-dashboard" : "/user-dashboard";
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1E293B] text-white">
       <div className="container mx-auto px-4 lg:px-6">
@@ -71,10 +73,10 @@ const Header = () => {
                   <DropdownMenuContent align="end" className="min-w-[12rem]">
                     <div className="px-2 py-1.5 text-xs text-muted-foreground">Signed in as {user?.email || "user"}</div>
                     <DropdownMenuItem asChild>
-                      <Link to="/user-dashboard">Profile</Link>
+                      <Link to={dashboardPath}>Profile</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to="/user-dashboard">Settings</Link>
+                      <Link to={dashboardPath}>Settings</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => signOut()} className="text-red-600">Logout</DropdownMenuItem>
                   </DropdownMenuContent>
@@ -118,8 +120,8 @@ const Header = () => {
                   </button>
                 ) : (
                   <>
-                    <Link to="/user-dashboard" onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Profile</Link>
-                    <Link to="/user-dashboard" onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Settings</Link>
+                    <Link to={dashboardPath} onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Profile</Link>
+                    <Link to={dashboardPath} onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Settings</Link>
                     <button className="text-left text-sm text-red-300 hover:text-red-400" onClick={() => { signOut(); setIsMenuOpen(false); }}>Logout</button>
                   </>
                 )}
