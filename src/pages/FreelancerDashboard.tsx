@@ -84,7 +84,7 @@ const FreelancerDashboard = () => {
 
         <Card className="rounded-2xl border-0 shadow-[0_12px_30px_rgba(0,0,0,0.07)] bg-white">
           <CardContent className="flex items-center gap-4 py-6">
-            <Avatar className="w-20 h-20"><AvatarFallback>{(profile.name?.[0] || "F").toUpperCase()}</AvatarFallback></Avatar>
+            <Avatar className="w-20 h-20 ring-2 ring-[#EAB308] shadow-[0_0_0_4px_rgba(234,179,8,0.25)]"><AvatarFallback>{(profile.name?.[0] || "F").toUpperCase()}</AvatarFallback></Avatar>
             <div className="flex-1">
               <div className="text-xl font-semibold">{profile.name || "Your Name"} – {profile.role}</div>
               <div className="text-sm text-muted-foreground">{profile.storeName || "Independent"}</div>
@@ -468,7 +468,7 @@ const FreelancerDashboard = () => {
                         <TableCell>{j.storeName}</TableCell>
                         <TableCell>{j.title}</TableCell>
                         <TableCell><Badge>{j.status.replace("_"," ")}</Badge></TableCell>
-                        <TableCell>₹{(j.rate*j.hours).toLocaleString('en-IN')}</TableCell>
+                        <TableCell>���{(j.rate*j.hours).toLocaleString('en-IN')}</TableCell>
                         <TableCell className="text-right space-x-2">
                           {j.status === "assigned" && (<Button size="sm" onClick={() => startJob(j.id)}>Start</Button>)}
                           {j.status === "in_progress" && (<Button size="sm" onClick={() => completeJob(j.id)}>Complete</Button>)}
