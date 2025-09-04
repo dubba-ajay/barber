@@ -99,14 +99,14 @@ const FreelancerDashboard = () => {
 
         <Tabs defaultValue="appointments">
           <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
-            <TabsTrigger value="appointments">My Appointments</TabsTrigger>
-            <TabsTrigger value="services">Services Assigned</TabsTrigger>
-            <TabsTrigger value="earnings">Earnings</TabsTrigger>
-            <TabsTrigger value="feedback">Client Feedback</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="help">Help Center</TabsTrigger>
-            <TabsTrigger value="jobs">Available Shifts</TabsTrigger>
-            <TabsTrigger value="my">My Jobs</TabsTrigger>
+            <TabsTrigger value="appointments" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">My Appointments</TabsTrigger>
+            <TabsTrigger value="services" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Services Assigned</TabsTrigger>
+            <TabsTrigger value="earnings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Earnings</TabsTrigger>
+            <TabsTrigger value="feedback" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Client Feedback</TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Settings</TabsTrigger>
+            <TabsTrigger value="help" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Help Center</TabsTrigger>
+            <TabsTrigger value="jobs" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Available Shifts</TabsTrigger>
+            <TabsTrigger value="my" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">My Jobs</TabsTrigger>
           </TabsList>
 
           <TabsContent value="appointments">
