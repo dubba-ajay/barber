@@ -414,6 +414,37 @@ const UserDashboard = () => {
                 </CardContent>
               </Card>
 
+              <Card>
+                <CardHeader><CardTitle>Account Role</CardTitle></CardHeader>
+                <CardContent className="grid gap-4 md:max-w-md">
+                  <div className="grid gap-2">
+                    <Label>Role</Label>
+                    <Select defaultValue={(role || 'customer') as string}>
+                      <SelectTrigger><SelectValue placeholder="Select role" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="customer">Customer</SelectItem>
+                        <SelectItem value="freelancer">Freelancer</SelectItem>
+                        <SelectItem value="owner">Store Owner</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Button onClick={async ()=>{
+                      if (!hasSupabaseEnv) { alert('Connect Supabase first'); return; }
+                      try {
+                        const supabase = getSupabase();
+                        const sel = document.querySelector('[data-state="open"] [data-radix-select-collection-item][data-selected]') as HTMLElement | null;
+                        const newRole = (sel?.textContent || 'customer').toLowerCase();
+                        await supabase.auth.updateUser({ data: { role: newRole } });
+                        if (newRole === 'freelancer') window.location.assign('/freelancer-dashboard');
+                        else if (newRole === 'owner') window.location.assign('/store-owner-dashboard');
+                        else window.location.assign('/user-dashboard');
+                      } catch (e:any) {
+                        alert(e.message || 'Failed to update role');
+                      }
+                    }}>Save Role</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
               <Card className="lg:col-span-2">
                 <CardHeader><CardTitle>Account Security</CardTitle></CardHeader>
                 <CardContent className="grid gap-4 md:max-w-xl">
