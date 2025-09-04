@@ -76,7 +76,7 @@ const Header = () => {
                       <Link to={dashboardPath}>Profile</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link to={dashboardPath}>Settings</Link>
+                      <Link to={dashboardPath} state={{ tab: "settings" }}>Settings</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => signOut()} className="text-red-600">Logout</DropdownMenuItem>
                   </DropdownMenuContent>
@@ -121,7 +121,7 @@ const Header = () => {
                 ) : (
                   <>
                     <Link to={dashboardPath} onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Profile</Link>
-                    <Link to={dashboardPath} onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Settings</Link>
+                    <Link to={dashboardPath} state={{ tab: "settings" }} onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Settings</Link>
                     <button className="text-left text-sm text-red-300 hover:text-red-400" onClick={() => { signOut(); setIsMenuOpen(false); }}>Logout</button>
                   </>
                 )}
