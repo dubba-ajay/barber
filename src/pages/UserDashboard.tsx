@@ -98,7 +98,7 @@ const UserDashboard = () => {
           </div>
         </div>
 
-        <Card>
+        <Card className="rounded-2xl border-0 shadow-[0_12px_30px_rgba(0,0,0,0.07)] bg-white">
           <CardContent className="flex flex-col md:flex-row items-center md:items-start gap-4 py-6">
             <Avatar className="w-20 h-20"><AvatarFallback>{(user?.email?.[0] || "U").toUpperCase()}</AvatarFallback></Avatar>
             <div className="flex-1 w-full">
