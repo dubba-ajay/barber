@@ -82,7 +82,7 @@ const FreelancerDashboard = () => {
           </div>
         </div>
 
-        <Card>
+        <Card className="rounded-2xl border-0 shadow-[0_12px_30px_rgba(0,0,0,0.07)] bg-white">
           <CardContent className="flex items-center gap-4 py-6">
             <Avatar className="w-20 h-20"><AvatarFallback>{(profile.name?.[0] || "F").toUpperCase()}</AvatarFallback></Avatar>
             <div className="flex-1">
