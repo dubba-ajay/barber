@@ -23,7 +23,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#3b82f6] text-white">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#1E293B] text-white">
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
@@ -38,7 +38,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-[#60a5fa] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
+                  className={`text-sm font-medium transition-colors hover:text-[#3B82F6] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                 >
                   {item.name}
                 </Link>
@@ -46,10 +46,10 @@ const Header = () => {
             })}
           </nav>
 
-          <div className="hidden md:flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-2">
             {!user ? (
               <>
-                <Button variant="ghost" size="sm" className="text-sm text-white hover:bg-white/10" onClick={() => setAuthOpen(true)}>
+                <Button variant="outline" size="sm" className="text-sm text-white border-white hover:bg-white/10" onClick={() => setAuthOpen(true)}>
                   <User className="w-4 h-4 mr-2" />
                   Login / Sign Up
                 </Button>
@@ -61,11 +61,12 @@ const Header = () => {
                   <Button variant="outline" size="sm" className="text-white border-white hover:bg-white/10"><User className="w-4 h-4 mr-2" /> Account</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  {role === "owner" ? (
+                  <div className="px-2 py-1.5 text-xs text-muted-foreground">Signed in as {user?.email || "user"}</div>
+                  { (role || "customer") === "owner" ? (
                     <DropdownMenuItem asChild>
                       <Link to="/store-owner-dashboard">Store Owner Dashboard</Link>
                     </DropdownMenuItem>
-                  ) : role === "freelancer" ? (
+                  ) : (role || "customer") === "freelancer" ? (
                     <DropdownMenuItem asChild>
                       <Link to="/freelancer-dashboard">Freelancer Dashboard</Link>
                     </DropdownMenuItem>
@@ -100,7 +101,7 @@ const Header = () => {
                       key={item.name}
                       to={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`py-2 text-sm hover:text-[#60a5fa] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
+                      className={`py-2 text-sm hover:text-[#3B82F6] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                     >
                       {item.name}
                     </Link>
@@ -114,9 +115,9 @@ const Header = () => {
                   </Button>
                 ) : (
                   <>
-                    {role === "owner" ? (
+                    { (role || "customer") === "owner" ? (
                       <Link to="/store-owner-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">Owner Dashboard</Button></Link>
-                    ) : role === "freelancer" ? (
+                    ) : (role || "customer") === "freelancer" ? (
                       <Link to="/freelancer-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">Freelancer Dashboard</Button></Link>
                     ) : (
                       <Link to="/user-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">User Dashboard</Button></Link>
