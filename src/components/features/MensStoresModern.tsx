@@ -107,7 +107,7 @@ export default function MensStoresModern({ category = "mens-hair" }: { category?
                 <img src={store.image} alt={store.name} className="w-full h-52 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute top-3 left-3 flex gap-2">
-                  <Badge className="bg-white/95 text-[#0F172A] font-semibold">
+                  <Badge className="bg-white/20 text-white border-white/30 font-semibold">
                     <Star className="w-4 h-4 mr-1 fill-[#EAB308] text-[#EAB308]" />
                     {store.rating}
                   </Badge>
@@ -117,10 +117,10 @@ export default function MensStoresModern({ category = "mens-hair" }: { category?
                 </div>
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold drop-shadow-sm text-[#0F172A]">{store.name}</h3>
+                    <h3 className="text-lg font-bold drop-shadow-sm text-white">{store.name}</h3>
                     <span className="text-xs opacity-90">{store.distance}</span>
                   </div>
-                  <div className="mt-1 flex items-center text-sm text-[#6B7280]">
+                  <div className="mt-1 flex items-center text-sm text-white/90">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span className="truncate">{store.address}</span>
                   </div>
