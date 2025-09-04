@@ -15,14 +15,14 @@ export default function MobileBottomNav() {
 
   const dashboard = isOwner ? "/store-owner-dashboard" : isFreelancer ? "/freelancer-dashboard" : "/user-dashboard";
 
-  const items: { key: string; label: string; icon: JSX.Element; onClick: () => void; active: boolean }[] = [
-    { key: "home", label: "Home", icon: <Home className="w-5 h-5" />, onClick: go("/", undefined), active: activePath === "/" },
+  const items = [
+    { key: "home", label: "Home", icon: <Home className="w-5 h-5" />, onClick: go("/"), active: activePath === "/" },
     { key: "bookings", label: "Bookings", icon: <Calendar className="w-5 h-5" />, onClick: go(dashboard, isOwner ? "bookings" : "bookings"), active: activePath.includes("dashboard") },
     ...(isOwner || isFreelancer ? [{ key: "staff", label: "Staff", icon: <Users className="w-5 h-5" />, onClick: go(dashboard, isOwner ? "staff" : "appointments"), active: activePath.includes("dashboard") }] : []),
     ...(isOwner ? [{ key: "offers", label: "Offers", icon: <Megaphone className="w-5 h-5" />, onClick: go(dashboard, "offers"), active: activePath.includes("dashboard") }] : []),
     { key: "earnings", label: "Earnings", icon: <IndianRupee className="w-5 h-5" />, onClick: go(dashboard, isOwner ? "earnings" : "earnings"), active: activePath.includes("dashboard") },
     { key: "profile", label: "Profile", icon: <Settings className="w-5 h-5" />, onClick: go(dashboard, "settings"), active: activePath.includes("dashboard") },
-  ];
+  ] as const;
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-[0_-4px_12px_rgba(0,0,0,0.06)]">
