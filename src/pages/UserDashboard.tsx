@@ -251,6 +251,11 @@ const UserDashboard = () => {
               <Card className="lg:col-span-2 rounded-2xl border-0 shadow-[0_10px_28px_rgba(0,0,0,0.06)]">
                 <CardHeader><CardTitle className="flex items-center gap-2"><CreditCard className="w-5 h-5 text-[#EAB308]"/>Payment Methods</CardTitle></CardHeader>
                 <CardContent className="grid gap-4 md:max-w-xl">
+                  <div className="flex gap-2 mb-2">
+                    <span className="px-2 py-1 text-xs rounded-full border border-[#1E293B] text-[#1E293B] bg-white">UPI</span>
+                    <span className="px-2 py-1 text-xs rounded-full border border-[#1E293B] text-[#1E293B] bg-white">VISA</span>
+                    <span className="px-2 py-1 text-xs rounded-full border border-[#1E293B] text-[#1E293B] bg-white">MasterCard</span>
+                  </div>
                   <div className="grid gap-2">
                     <Label>UPI ID</Label>
                     <Input placeholder="name@bank" />
