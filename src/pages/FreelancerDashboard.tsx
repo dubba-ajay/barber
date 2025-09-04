@@ -98,7 +98,7 @@ const FreelancerDashboard = () => {
         </Card>
 
         <Tabs defaultValue="appointments">
-          <TabsList className="flex flex-wrap">
+          <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
             <TabsTrigger value="appointments">My Appointments</TabsTrigger>
             <TabsTrigger value="services">Services Assigned</TabsTrigger>
             <TabsTrigger value="earnings">Earnings</TabsTrigger>
@@ -468,7 +468,7 @@ const FreelancerDashboard = () => {
                         <TableCell>{j.storeName}</TableCell>
                         <TableCell>{j.title}</TableCell>
                         <TableCell><Badge>{j.status.replace("_"," ")}</Badge></TableCell>
-                        <TableCell>���{(j.rate*j.hours).toLocaleString('en-IN')}</TableCell>
+                        <TableCell>₹{(j.rate*j.hours).toLocaleString('en-IN')}</TableCell>
                         <TableCell className="text-right space-x-2">
                           {j.status === "assigned" && (<Button size="sm" onClick={() => startJob(j.id)}>Start</Button>)}
                           {j.status === "in_progress" && (<Button size="sm" onClick={() => completeJob(j.id)}>Complete</Button>)}
