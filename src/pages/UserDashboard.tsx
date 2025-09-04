@@ -262,19 +262,19 @@ const UserDashboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label>Card number</Label>
-                    <Input placeholder="1234 5678 9012 3456" />
+                    <Input placeholder="1234 5678 9012 3456" className="rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-[#EAB308]"/>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="grid gap-2">
                       <Label>Expiry</Label>
-                      <Input placeholder="MM/YY" />
+                      <Input placeholder="MM/YY" className="rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-[#EAB308]"/>
                     </div>
                     <div className="grid gap-2">
                       <Label>CVV</Label>
-                      <Input placeholder="123" />
+                      <Input placeholder="123" className="rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-[#EAB308]"/>
                     </div>
                   </div>
-                  <Button className="w-full">Save payment method</Button>
+                  <Button className="w-full rounded-xl bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white shadow">Save payment method</Button>
                 </CardContent>
               </Card>
             </div>
