@@ -44,6 +44,10 @@ const UserDashboard = () => {
   const { user, role, signOut } = useAuth();
   const location = useLocation();
   const [tab, setTab] = useState<string>((location.state as any)?.tab || "bookings");
+  useEffect(() => {
+    const t = (location.state as any)?.tab as string | undefined;
+    if (t) setTab(t);
+  }, [location.state]);
   const [bookings, setBookings] = useState<BookingRecord[]>(getMyBookings());
 
   const [profile, setProfile] = useLocalStorage("profile", { displayName: "", phone: "" });
