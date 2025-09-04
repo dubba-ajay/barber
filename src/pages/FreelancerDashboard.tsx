@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { useMarketplace } from "@/contexts/MarketplaceContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -493,6 +494,7 @@ const FreelancerDashboard = () => {
         </Tabs>
       </main>
       <Footer />
+      <MobileBottomNav />
 
       <Dialog open={reportOpen} onOpenChange={setReportOpen}>
         <DialogContent>
