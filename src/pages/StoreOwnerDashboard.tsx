@@ -99,7 +99,7 @@ const StoreOwnerDashboard = () => {
   const [newOfferOpen, setNewOfferOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
       <Header />
       <main className="pt-16 container mx-auto px-4 lg:px-6 py-8 space-y-6">
         <div className="flex items-center justify-between">
@@ -111,16 +111,16 @@ const StoreOwnerDashboard = () => {
         </div>
 
         <Tabs defaultValue="overview">
-          <TabsList className="flex flex-wrap">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="profile">Store Profile</TabsTrigger>
-            <TabsTrigger value="services">Services & Pricing</TabsTrigger>
-            <TabsTrigger value="staff">Staff</TabsTrigger>
-            <TabsTrigger value="bookings">Bookings</TabsTrigger>
-            <TabsTrigger value="earnings">Earnings & Payouts</TabsTrigger>
-            <TabsTrigger value="offers">Local Offers</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
+            <TabsTrigger value="overview" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Overview</TabsTrigger>
+            <TabsTrigger value="profile" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Store Profile</TabsTrigger>
+            <TabsTrigger value="services" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Services & Pricing</TabsTrigger>
+            <TabsTrigger value="staff" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Staff</TabsTrigger>
+            <TabsTrigger value="bookings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Bookings</TabsTrigger>
+            <TabsTrigger value="earnings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Earnings & Payouts</TabsTrigger>
+            <TabsTrigger value="offers" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Local Offers</TabsTrigger>
+            <TabsTrigger value="reviews" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Reviews</TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
