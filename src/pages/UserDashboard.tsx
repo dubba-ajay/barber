@@ -228,18 +228,18 @@ const UserDashboard = () => {
           <TabsContent value="payments">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <Card className="lg:col-span-1 rounded-2xl border-0 shadow-[0_10px_28px_rgba(0,0,0,0.06)]">
-                <CardHeader><CardTitle>Wallet</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="flex items-center gap-2"><WalletIcon className="w-5 h-5 text-[#EAB308]"/>Wallet</CardTitle></CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="text-3xl font-bold">₹{walletBalance.toLocaleString('en-IN')}</div>
+                  <div className="text-3xl font-bold text-[#EAB308] flex items-center gap-2"><IndianRupee className="w-5 h-5"/> {walletBalance.toLocaleString('en-IN')}</div>
                   <div className="flex gap-2">
-                    <Button onClick={() => addMoney(100)}>Add ₹100</Button>
-                    <Button variant="outline" onClick={() => addMoney(500)}>Add ₹500</Button>
+                    <Button onClick={() => addMoney(100)} className="rounded-xl bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white shadow">Add ₹100</Button>
+                    <Button variant="outline" onClick={() => addMoney(500)} className="rounded-xl border-[#EAB308] text-[#0F172A] hover:bg-yellow-50">Add ₹500</Button>
                   </div>
                   <div className="grid gap-2">
                     <Label>Coupon / Gift card</Label>
                     <div className="flex gap-2">
-                      <Input placeholder="Enter code" id="coupon" />
-                      <Button onClick={() => {
+                      <Input placeholder="Enter code" id="coupon" className="rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-[#EAB308]"/>
+                      <Button className="rounded-xl bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white" onClick={() => {
                         const el = document.getElementById('coupon') as HTMLInputElement | null;
                         if (el && el.value) applyCoupon(el.value);
                       }}>Apply</Button>
