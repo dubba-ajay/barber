@@ -42,6 +42,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  state={item.href === "/" ? { allowHome: true } : undefined}
                   className={`text-sm font-medium transition-colors hover:text-[#3B82F6] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                 >
                   {item.name}
@@ -104,6 +105,7 @@ const Header = () => {
                     <Link
                       key={item.name}
                       to={item.href}
+                      state={item.href === "/" ? { allowHome: true } : undefined}
                       onClick={() => setIsMenuOpen(false)}
                       className={`py-2 text-sm hover:text-[#3B82F6] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                     >
