@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth, AppRole } from "@/contexts/AuthContext";
+import { getSupabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
 export default function AuthDialog({ open, onOpenChange, mode = "login" as "login" | "signup" }) {
@@ -21,10 +22,14 @@ export default function AuthDialog({ open, onOpenChange, mode = "login" as "logi
     try {
       setLoading(true);
       await signIn(email, password);
+      const supabase = getSupabase();
+      const { data } = await supabase.auth.getUser();
+      const r = (data.user?.user_metadata?.role as AppRole | undefined) || "customer";
       toast("Logged in");
       onOpenChange(false);
-      // naive redirect: user chooses destination manually via menu; default to user dashboard
-      navigate("/user-dashboard");
+      if (r === "freelancer") navigate("/freelancer-dashboard");
+      else if (r === "owner") navigate("/store-owner-dashboard");
+      else navigate("/user-dashboard");
     } catch (e:any) { toast.error(e.message); } finally { setLoading(false); }
   };
   const onSignup = async () => {
