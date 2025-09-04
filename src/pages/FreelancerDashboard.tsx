@@ -73,6 +73,11 @@ const FreelancerDashboard = () => {
 
   const location = useLocation();
   const initialTab = ((location.state as any)?.tab as string) || "appointments";
+  const [tab, setTab] = useState<string>(initialTab);
+  useEffect(() => {
+    const t = (location.state as any)?.tab as string | undefined;
+    if (t) setTab(t);
+  }, [location.state]);
   return (
     <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
       <Header />
@@ -100,7 +105,7 @@ const FreelancerDashboard = () => {
           </CardContent>
         </Card>
 
-        <Tabs defaultValue={initialTab}>
+        <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
             <TabsTrigger value="appointments" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">My Appointments</TabsTrigger>
             <TabsTrigger value="services" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Services Assigned</TabsTrigger>
