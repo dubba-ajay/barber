@@ -13,13 +13,17 @@ const Index = () => {
   const { role } = useAuth();
   const navigate = useNavigate();
 
+  const location = useLocation();
   useEffect(() => {
-    if (role === "owner") {
-      navigate("/store-owner-dashboard", { replace: true });
-    } else if (role === "freelancer") {
-      navigate("/freelancer-dashboard", { replace: true });
+    const allowHome = (location.state as any)?.allowHome;
+    if (!allowHome) {
+      if (role === "owner") {
+        navigate("/store-owner-dashboard", { replace: true });
+      } else if (role === "freelancer") {
+        navigate("/freelancer-dashboard", { replace: true });
+      }
     }
-  }, [role, navigate]);
+  }, [role, navigate, location.state]);
 
   return (
     <div className="min-h-screen flex flex-col">
