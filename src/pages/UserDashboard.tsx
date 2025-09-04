@@ -100,7 +100,7 @@ const UserDashboard = () => {
 
         <Card className="rounded-2xl border-0 shadow-[0_12px_30px_rgba(0,0,0,0.07)] bg-white">
           <CardContent className="flex flex-col md:flex-row items-center md:items-start gap-4 py-6">
-            <Avatar className="w-20 h-20"><AvatarFallback>{(user?.email?.[0] || "U").toUpperCase()}</AvatarFallback></Avatar>
+            <Avatar className="w-20 h-20 ring-2 ring-[#EAB308] shadow-[0_0_0_4px_rgba(234,179,8,0.25)]"><AvatarFallback>{(user?.email?.[0] || "U").toUpperCase()}</AvatarFallback></Avatar>
             <div className="flex-1 w-full">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
