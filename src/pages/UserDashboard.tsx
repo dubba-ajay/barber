@@ -258,7 +258,7 @@ const UserDashboard = () => {
                   </div>
                   <div className="grid gap-2">
                     <Label>UPI ID</Label>
-                    <Input placeholder="name@bank" />
+                    <Input placeholder="name@bank" className="rounded-xl shadow-sm focus-visible:ring-2 focus-visible:ring-[#EAB308]"/>
                   </div>
                   <div className="grid gap-2">
                     <Label>Card number</Label>
