@@ -107,7 +107,7 @@ const UserDashboard = () => {
                   <div className="text-xl font-semibold">{profile.displayName || "Your Name"}</div>
                   <div className="text-sm text-muted-foreground">{profile.phone || "Add phone"} • {user?.email}</div>
                 </div>
-                <Button onClick={() => setEditOpen(true)}>Edit Profile</Button>
+                <Button onClick={() => setEditOpen(true)} className="rounded-xl bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white shadow-md"><Pencil className="w-4 h-4 mr-2"/>Edit Profile</Button>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
                 <button onClick={() => setTab("bookings")} className="p-3 border rounded hover:bg-accent text-left">My Appointments</button>
