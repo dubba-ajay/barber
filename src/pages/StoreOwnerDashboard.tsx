@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { useMarketplace } from "@/contexts/MarketplaceContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -443,6 +444,7 @@ const StoreOwnerDashboard = () => {
         </Tabs>
       </main>
       <Footer />
+      <MobileBottomNav />
 
       <Dialog open={!!reschedOpen} onOpenChange={(v)=>{ if(!v) setReschedOpen(null); }}>
         <DialogContent>
