@@ -102,7 +102,7 @@ const MakeupArtistsHeroSlider = () => {
   const currentHero = heroSlides[currentSlide];
 
   return (
-    <section className="relative h-[80vh] overflow-hidden mt-16">
+    <section className="relative h-[80vh] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img

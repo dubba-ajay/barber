@@ -58,7 +58,7 @@ export default function CategoryHeroSlider({ category, showTabs = true }: { cate
   ];
 
   return (
-    <section className="relative h-[70vh] overflow-hidden mt-16">
+    <section className="relative h-[70vh] overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <img src={current.image} alt={current.name} className="w-full h-full object-cover transition-all duration-1000" />

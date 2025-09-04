@@ -18,10 +18,12 @@ const Header = () => {
     { name: "Women's Beauty", href: "/womens-beauty" },
     { name: "Nail Studios", href: "/nail-studios" },
     { name: "Makeup Artists", href: "/makeup-artists" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-white shadow">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#3b82f6] text-white">
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
@@ -36,7 +38,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`relative text-sm font-medium transition-colors hover:underline hover:text-blue-100 ${active ? "font-semibold underline text-blue-100" : "text-white"}`}
+                  className={`text-sm font-medium transition-colors hover:text-[#60a5fa] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                 >
                   {item.name}
                 </Link>
@@ -45,9 +47,6 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Link to="/all-stores">
-              <Button size="sm" className="rounded-full bg-white text-[#1d4ed8] hover:bg-blue-50">Book Now</Button>
-            </Link>
             {!user ? (
               <>
                 <Button variant="ghost" size="sm" className="text-sm text-white hover:bg-white/10" onClick={() => setAuthOpen(true)}>
@@ -101,15 +100,12 @@ const Header = () => {
                       key={item.name}
                       to={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`py-2 text-sm hover:underline hover:text-blue-100 ${active ? "font-semibold underline text-blue-100" : "text-white"}`}
+                      className={`py-2 text-sm hover:text-[#60a5fa] hover:font-semibold ${active ? "font-semibold" : "text-white"}`}
                     >
                       {item.name}
                     </Link>
                   );
                 })}
-                <Link to="/all-stores" onClick={() => setIsMenuOpen(false)}>
-                  <Button size="sm" className="w-full rounded-full bg-white text-[#1d4ed8] hover:bg-blue-50">Book Now</Button>
-                </Link>
               </div>
               <div className="px-4 pt-2 flex items-center gap-2">
                 {!user ? (

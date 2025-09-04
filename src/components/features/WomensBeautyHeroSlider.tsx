@@ -55,7 +55,7 @@ const WomensBeautyHeroSlider = () => {
   const currentStore = topStores[currentSlide];
 
   return (
-    <section className="relative h-[70vh] overflow-hidden mt-16">
+    <section className="relative h-[70vh] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
