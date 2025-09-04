@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import AuthDialog from "@/components/auth/AuthDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, role, signOut } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -46,38 +48,38 @@ const Header = () => {
             })}
           </nav>
 
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-4">
             {!user ? (
               <>
-                <Button variant="outline" size="sm" className="text-sm text-white border-white hover:bg-white/10" onClick={() => setAuthOpen(true)}>
-                  <User className="w-4 h-4 mr-2" />
-                  Login / Sign Up
-                </Button>
+                <button onClick={() => setAuthOpen(true)} className="flex items-center gap-2 text-sm text-white/90 hover:text-[#EAB308] transition-colors">
+                  <User className="w-4 h-4" />
+                  <span>Login / Sign Up</span>
+                </button>
                 <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
               </>
             ) : (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="text-white border-white hover:bg-white/10"><User className="w-4 h-4 mr-2" /> Account</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <div className="px-2 py-1.5 text-xs text-muted-foreground">Signed in as {user?.email || "user"}</div>
-                  { (role || "customer") === "owner" ? (
+              <div onMouseEnter={() => setAccountOpen(true)} onMouseLeave={() => setAccountOpen(false)} className="relative">
+                <DropdownMenu open={accountOpen} onOpenChange={setAccountOpen}>
+                  <DropdownMenuTrigger asChild>
+                    <div className="flex items-center gap-2 cursor-pointer select-none">
+                      <Avatar className="h-8 w-8 ring-1 ring-white/30">
+                        <AvatarFallback className="bg-white/10 text-white text-xs">{(user?.email?.[0] || "U").toUpperCase()}</AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm text-white/90 hover:text-[#EAB308]">Account</span>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-[12rem]">
+                    <div className="px-2 py-1.5 text-xs text-muted-foreground">Signed in as {user?.email || "user"}</div>
                     <DropdownMenuItem asChild>
-                      <Link to="/store-owner-dashboard">Store Owner Dashboard</Link>
+                      <Link to="/user-dashboard">Profile</Link>
                     </DropdownMenuItem>
-                  ) : (role || "customer") === "freelancer" ? (
                     <DropdownMenuItem asChild>
-                      <Link to="/freelancer-dashboard">Freelancer Dashboard</Link>
+                      <Link to="/user-dashboard">Settings</Link>
                     </DropdownMenuItem>
-                  ) : (
-                    <DropdownMenuItem asChild>
-                      <Link to="/user-dashboard">User Dashboard</Link>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    <DropdownMenuItem onClick={() => signOut()} className="text-red-600">Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             )}
           </div>
 
@@ -108,21 +110,17 @@ const Header = () => {
                   );
                 })}
               </div>
-              <div className="px-4 pt-2 flex items-center gap-2">
+              <div className="px-4 pt-2 grid gap-2">
                 {!user ? (
-                  <Button variant="ghost" size="sm" className="flex-1 justify-start text-white hover:bg-white/10" onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}>
-                    <User className="w-4 h-4 mr-2" /> Login / Sign Up
-                  </Button>
+                  <button className="flex items-center gap-2 text-white/90 hover:text-[#EAB308] text-sm" onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}>
+                    <User className="w-4 h-4" />
+                    <span>Login / Sign Up</span>
+                  </button>
                 ) : (
                   <>
-                    { (role || "customer") === "owner" ? (
-                      <Link to="/store-owner-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">Owner Dashboard</Button></Link>
-                    ) : (role || "customer") === "freelancer" ? (
-                      <Link to="/freelancer-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">Freelancer Dashboard</Button></Link>
-                    ) : (
-                      <Link to="/user-dashboard" className="flex-1" onClick={() => setIsMenuOpen(false)}><Button variant="ghost" size="sm" className="w-full justify-start text-white hover:bg-white/10">User Dashboard</Button></Link>
-                    )}
-                    <Button size="sm" className="flex-1 bg-white/10 hover:bg-white/20 text-white" onClick={() => { signOut(); setIsMenuOpen(false); }}>Sign out</Button>
+                    <Link to="/user-dashboard" onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Profile</Link>
+                    <Link to="/user-dashboard" onClick={() => setIsMenuOpen(false)} className="text-sm text-white/90 hover:text-[#EAB308]">Settings</Link>
+                    <button className="text-left text-sm text-red-300 hover:text-red-400" onClick={() => { signOut(); setIsMenuOpen(false); }}>Logout</button>
                   </>
                 )}
               </div>
