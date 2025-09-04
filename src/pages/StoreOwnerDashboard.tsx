@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function useLocalStorage<T>(key: string, initial: T) {
   const [val, setVal] = useState<T>(() => {
@@ -98,6 +99,8 @@ const StoreOwnerDashboard = () => {
   const [newStaffOpen, setNewStaffOpen] = useState(false);
   const [newOfferOpen, setNewOfferOpen] = useState(false);
 
+  const location = useLocation();
+  const initialTab = ((location.state as any)?.tab as string) || "overview";
   return (
     <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
       <Header />
@@ -110,7 +113,7 @@ const StoreOwnerDashboard = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="overview">
+        <Tabs defaultValue={initialTab}>
           <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
             <TabsTrigger value="overview" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Overview</TabsTrigger>
             <TabsTrigger value="profile" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Store Profile</TabsTrigger>
