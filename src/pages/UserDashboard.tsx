@@ -124,14 +124,14 @@ const UserDashboard = () => {
 
         <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
-            <TabsTrigger value="bookings">Appointments</TabsTrigger>
-            <TabsTrigger value="favorites">Favorites</TabsTrigger>
-            <TabsTrigger value="payments">Payments & Wallet</TabsTrigger>
-            <TabsTrigger value="memberships">Memberships</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="help">Help Center</TabsTrigger>
-            <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            <TabsTrigger value="bookings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Appointments</TabsTrigger>
+            <TabsTrigger value="favorites" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Favorites</TabsTrigger>
+            <TabsTrigger value="payments" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Payments & Wallet</TabsTrigger>
+            <TabsTrigger value="memberships" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Memberships</TabsTrigger>
+            <TabsTrigger value="settings" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Settings</TabsTrigger>
+            <TabsTrigger value="profile" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Profile</TabsTrigger>
+            <TabsTrigger value="help" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Help Center</TabsTrigger>
+            <TabsTrigger value="feedback" className="rounded-full px-4 py-2 bg-gray-100 text-[#0F172A] data-[state=active]:bg-[#EAB308] data-[state=active]:text-white shadow-sm">Feedback</TabsTrigger>
           </TabsList>
 
           <TabsContent value="bookings">
