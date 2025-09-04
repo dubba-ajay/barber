@@ -18,6 +18,7 @@ import { Pencil, Wallet as WalletIcon, IndianRupee, CreditCard } from "lucide-re
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { getSupabase, hasSupabaseEnv } from "@/lib/supabase";
+import { useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { getMyBookings, cancelSlot, BookingRecord, bookSlot, listBookedSlots } from "@/lib/availability";
 
@@ -41,7 +42,8 @@ function useLocalStorage<T>(key: string, initial: T) {
 
 const UserDashboard = () => {
   const { user, role, signOut } = useAuth();
-  const [tab, setTab] = useState("bookings");
+  const location = useLocation();
+  const [tab, setTab] = useState<string>((location.state as any)?.tab || "bookings");
   const [bookings, setBookings] = useState<BookingRecord[]>(getMyBookings());
 
   const [profile, setProfile] = useLocalStorage("profile", { displayName: "", phone: "" });
