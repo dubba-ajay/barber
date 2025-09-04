@@ -102,13 +102,13 @@ export default function MensStoresModern({ category = "mens-hair" }: { category?
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((store) => (
-            <Card key={store.id} className="group overflow-hidden border-0 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-gradient-to-b from-white to-white/60">
+            <Card key={store.id} className="group overflow-hidden border-0 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all bg-white">
               <div className="relative">
                 <img src={store.image} alt={store.name} className="w-full h-52 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute top-3 left-3 flex gap-2">
-                  <Badge className="bg-white/90 text-gray-900 font-semibold">
-                    <Star className="w-4 h-4 mr-1 fill-yellow-400 text-yellow-400" />
+                  <Badge className="bg-white/95 text-[#0F172A] font-semibold">
+                    <Star className="w-4 h-4 mr-1 fill-[#EAB308] text-[#EAB308]" />
                     {store.rating}
                   </Badge>
                   <Badge variant="outline" className="bg-black/30 text-white border-white/20">
@@ -117,10 +117,10 @@ export default function MensStoresModern({ category = "mens-hair" }: { category?
                 </div>
                 <div className="absolute bottom-3 left-3 right-3 text-white">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold drop-shadow-sm">{store.name}</h3>
+                    <h3 className="text-lg font-bold drop-shadow-sm text-[#0F172A]">{store.name}</h3>
                     <span className="text-xs opacity-90">{store.distance}</span>
                   </div>
-                  <div className="mt-1 flex items-center text-sm opacity-90">
+                  <div className="mt-1 flex items-center text-sm text-[#6B7280]">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span className="truncate">{store.address}</span>
                   </div>
@@ -143,11 +143,11 @@ export default function MensStoresModern({ category = "mens-hair" }: { category?
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <Link to={`/salon/${store.id}`}>
-                    <Button className="w-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                    <Button className="w-full group bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white">
                       <Sparkles className="w-4 h-4 mr-2" />View & Book
                     </Button>
                   </Link>
-                  <Button variant="outline" className="w-full" onClick={() => window.open(`tel:${store.phone}`, "_self") }>
+                  <Button variant="outline" className="w-full bg-white border-[#1E293B] text-[#1E293B] hover:bg-slate-50" onClick={() => window.open(`tel:${store.phone}`, "_self") }>
                     <Phone className="w-4 h-4 mr-2" />Call
                   </Button>
                 </div>
