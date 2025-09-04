@@ -20,6 +20,8 @@ import WorkerDashboard from "./pages/WorkerDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import NotFound from "./pages/NotFound";
 import ServiceDetail from "./pages/ServiceDetail";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +46,8 @@ const App = () => (
             <Route path="/makeup-artists/salon/:id" element={<SalonDetail />} />
             <Route path="/all-stores" element={<AllStoresPage />} />
             <Route path="/service/:id" element={<ServiceDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/user-dashboard" element={<RequireAuth><UserDashboard /></RequireAuth>} />
             <Route path="/store-owner-dashboard" element={<RequireRole role="owner"><StoreOwnerDashboard /></RequireRole>} />
             <Route path="/freelancer-dashboard" element={<RequireRole role="freelancer"><FreelancerDashboard /></RequireRole>} />

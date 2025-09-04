@@ -8,8 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 210 40% 98%;
+    --foreground: 222.2 47.4% 11.2%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -18,7 +18,7 @@ All colors MUST be HSL.
     --popover-foreground: 222.2 84% 4.9%;
 
     /* Beauty Salon Primary Brand - Purple Gradient */
-    --primary: 164 70% 45%;
+    --primary: 215 28% 17%;
     --primary-foreground: 0 0% 98%;
     --primary-glow: 164 70% 55%;
 
@@ -38,7 +38,7 @@ All colors MUST be HSL.
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 45 93% 47%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -46,7 +46,7 @@ All colors MUST be HSL.
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 164 70% 45%;
+    --ring: 217.2 91.2% 59.8%;
 
     /* Beauty Salon Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(164 70% 45%), hsl(164 70% 55%));
