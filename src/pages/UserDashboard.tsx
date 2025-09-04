@@ -123,7 +123,7 @@ const UserDashboard = () => {
         </Card>
 
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="flex flex-wrap">
+          <TabsList className="flex flex-wrap gap-2 bg-transparent p-0">
             <TabsTrigger value="bookings">Appointments</TabsTrigger>
             <TabsTrigger value="favorites">Favorites</TabsTrigger>
             <TabsTrigger value="payments">Payments & Wallet</TabsTrigger>
