@@ -71,7 +71,7 @@ const FreelancerDashboard = () => {
   const [reportOpen, setReportOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
       <Header />
       <main className="pt-16 container mx-auto px-4 lg:px-6 py-8 space-y-6">
         <div className="flex items-center justify-between">
