@@ -16,6 +16,8 @@ const Index = () => {
   useEffect(() => {
     if (role === "owner") {
       navigate("/store-owner-dashboard", { replace: true });
+    } else if (role === "freelancer") {
+      navigate("/freelancer-dashboard", { replace: true });
     }
   }, [role, navigate]);
 
