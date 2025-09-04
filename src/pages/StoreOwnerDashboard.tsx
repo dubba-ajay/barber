@@ -113,9 +113,13 @@ const StoreOwnerDashboard = () => {
       <main className="pt-16 container mx-auto px-4 lg:px-6 py-8 space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Store Owner Dashboard</h1>
-          <div className="text-sm">
-            Role: <Badge>{role}</Badge>
-            <Button variant="outline" size="sm" className="ml-2" onClick={() => setRole("owner")}>Switch to Owner</Button>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="hidden sm:inline">Role:</span> <Badge>{role}</Badge>
+            <div className="flex items-center gap-1">
+              <span className="text-xs">Guest</span>
+              <input type="checkbox" className="toggle toggle-sm" checked={role==='owner'} onChange={()=> setRole(role==='owner'?'customer':'owner')} />
+              <span className="text-xs">Owner</span>
+            </div>
           </div>
         </div>
 
@@ -236,7 +240,7 @@ const StoreOwnerDashboard = () => {
           <TabsContent value="staff">
             <div className="flex justify-between items-center">
               <div className="text-lg font-semibold">Staff Management</div>
-              <Button onClick={()=> setNewStaffOpen(true)}>Add Staff</Button>
+              <Button onClick={()=> setNewStaffOpen(true)} className="rounded-full"><span className="mr-1">＋</span>Staff</Button>
             </div>
             <Card className="mt-3">
               <CardHeader><CardTitle>Team</CardTitle></CardHeader>
@@ -324,7 +328,7 @@ const StoreOwnerDashboard = () => {
           <TabsContent value="offers">
             <div className="flex justify-between items-center">
               <div className="text-lg font-semibold">Local Offers</div>
-              <Button onClick={()=> setNewOfferOpen(true)}>Create Offer</Button>
+              <Button onClick={()=> setNewOfferOpen(true)} className="rounded-full"><span className="mr-1">＋</span>Offer</Button>
             </div>
             <Card className="mt-3">
               <CardHeader><CardTitle>Active & Scheduled</CardTitle></CardHeader>
