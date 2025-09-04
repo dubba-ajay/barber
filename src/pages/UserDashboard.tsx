@@ -1,5 +1,6 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -600,6 +601,7 @@ const UserDashboard = () => {
         </Tabs>
       </main>
       <Footer />
+      <MobileBottomNav />
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent>
