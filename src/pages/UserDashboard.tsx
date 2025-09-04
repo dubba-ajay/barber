@@ -14,6 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Calendar } from "@/components/ui/calendar";
+import { Pencil, Wallet as WalletIcon, IndianRupee, CreditCard } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { getSupabase, hasSupabaseEnv } from "@/lib/supabase";
@@ -86,13 +87,13 @@ const UserDashboard = () => {
   const [rebookFor, setRebookFor] = useState<null | BookingRecord>(null);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
       <Header />
       <main className="pt-16 container mx-auto px-4 lg:px-6 py-8 space-y-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Your Dashboard</h1>
           <div className="flex items-center gap-3">
-            <Avatar><AvatarFallback>{(user?.email?.[0] || profile.displayName?.[0] || "U").toUpperCase()}</AvatarFallback></Avatar>
+            <Avatar className="ring-2 ring-[#EAB308] shadow-[0_0_0_3px_rgba(234,179,8,0.25)]"><AvatarFallback>{(user?.email?.[0] || profile.displayName?.[0] || "U").toUpperCase()}</AvatarFallback></Avatar>
             <div className="text-sm text-muted-foreground">{profile.displayName || user?.email}</div>
           </div>
         </div>
