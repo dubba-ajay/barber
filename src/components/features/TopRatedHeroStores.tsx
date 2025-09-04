@@ -51,7 +51,7 @@ export default function TopRatedHeroStores() {
               <img src={store.image} alt={store.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute top-3 left-3 flex gap-2">
-                <Badge className="bg-white/95 text-[#0F172A] font-semibold">
+                <Badge className="bg-white/20 text-white border-white/30 font-semibold">
                   <Star className="w-3 h-3 mr-1 fill-[#EAB308] text-[#EAB308]" />
                   {store.rating}
                 </Badge>
