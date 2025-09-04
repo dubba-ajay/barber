@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Phone, Clock } from "lucide-react";
@@ -46,13 +47,13 @@ export default function TopRatedHeroStores() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {picks.map((store) => (
-          <Card key={`${store.category}-${store.id}`} className="group overflow-hidden border-0 rounded-2xl shadow-lg hover:shadow-xl transition-all bg-gradient-to-b from-white to-white/60">
+          <Card key={`${store.category}-${store.id}`} className="group overflow-hidden border-0 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)] transition-all bg-white">
             <div className="relative h-40">
               <img src={store.image} alt={store.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute top-3 left-3 flex gap-2">
-                <Badge className="bg-white/90 text-gray-900 font-semibold">
-                  <Star className="w-3 h-3 mr-1 fill-yellow-400 text-yellow-400" />
+                <Badge className="bg-white/95 text-[#0F172A] font-semibold">
+                  <Star className="w-3 h-3 mr-1 fill-[#EAB308] text-[#EAB308]" />
                   {store.rating}
                 </Badge>
                 <Badge variant="outline" className="bg-black/30 text-white border-white/20">
@@ -64,7 +65,7 @@ export default function TopRatedHeroStores() {
                   <h3 className="text-base font-bold truncate" title={store.name}>{store.name}</h3>
                   <span className="text-xs opacity-90">{store.distance}</span>
                 </div>
-                <div className="mt-1 flex items-center text-xs opacity-90">
+                <div className="mt-1 flex items-center text-xs text-white/90">
                   <MapPin className="w-3 h-3 mr-1" />
                   <span className="truncate">{store.address}</span>
                 </div>
@@ -72,8 +73,8 @@ export default function TopRatedHeroStores() {
             </div>
             <CardContent className="p-3">
               <div className="flex items-center justify-between mb-2">
-                <Badge variant="outline" className="text-xs">{store.catLabel}</Badge>
-                <div className="flex items-center text-xs text-muted-foreground">
+                <Badge variant="outline" className="text-xs text-[#0F172A] border-slate-200">{store.catLabel}</Badge>
+                <div className="flex items-center text-xs text-[#6B7280]">
                   <Clock className="w-3 h-3 mr-1" />{store.openHours}
                 </div>
               </div>
@@ -89,9 +90,9 @@ export default function TopRatedHeroStores() {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <Link to={getCategoryLink(store)}>
-                  <Button size="sm" className="w-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">View & Book</Button>
+                  <Button size="sm" className="w-full group bg-gradient-to-r from-[#EAB308] to-[#1E293B] hover:from-[#f3c336] hover:to-[#0b1625] text-white">View & Book</Button>
                 </Link>
-                <Button size="sm" variant="outline" className="w-full" onClick={() => window.open(`tel:${store.phone}`, "_self") }>
+                <Button size="sm" variant="outline" className="w-full bg-white border-[#1E293B] text-[#1E293B] hover:bg-slate-50" onClick={() => window.open(`tel:${store.phone}`, "_self") }>
                   <Phone className="w-3 h-3 mr-1" />Call
                 </Button>
               </div>
